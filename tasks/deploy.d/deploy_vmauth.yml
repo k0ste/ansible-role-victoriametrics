@@ -1,0 +1,42 @@
+---
+- name: "victoriametrics | Deploy vmauth configuration"
+  ansible.builtin.template:
+    src: "vmauth.j2"
+    dest: "{{ hostvars[inventory_hostname]['victoriametrics_options_dest'] +
+      '/vmauth' }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - "Restart vmauth"
+- name: "victoriametrics | Deploy vmauth backends configuration"
+  ansible.builtin.template:
+    src: "vmauth.yaml.j2"
+    dest: "{{ hostvars[inventory_hostname]['victoriametrics_conf_dest'] +
+      '/vmauth.yml' }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+    validate: "vmauth --dryRun --auth.config %s"
+  when:
+    - "vars['victoriametrics_vmauth_instance_settings'] is defined"
+    - "vars['victoriametrics_vmauth_instance_settings'] != []"
+    - "vars['victoriametrics_vmauth_instance_settings'] != ''"
+  notify:
+    - "Reload vmauth"
+- name: "victoriametrics | Enable vmauth service"
+  ansible.builtin.systemd:
+    name: "vmauth"
+    enabled: "yes"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_enable_vmauth'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_enable_vmauth'])
+      == 'true'"
+  vars:
+    victoriametrics_service_enable_vmauth:
+      "[].enable[] | map(&vmauth || 'false', @) | [0]"

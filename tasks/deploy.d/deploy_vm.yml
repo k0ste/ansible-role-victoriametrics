@@ -1,0 +1,29 @@
+---
+- name: "victoriametrics | Set fact for JMESPath query"
+  ansible.builtin.set_fact:
+    victoriametrics_service_enable_query: "{{ \"[].enable[] | map(&\" +
+      vars['victoriametrics_service_deploy_name'] +
+      \" || 'false', @) | [0]\" }}"
+- name: "{{ 'victoriametrics | Deploy ' +
+    vars['victoriametrics_service_deploy_name'] + ' configuration' }}"
+  ansible.builtin.template:
+    src: "{{ vars['victoriametrics_service_deploy_name'] + '.j2' }}"
+    dest: "{{ hostvars[inventory_hostname]['victoriametrics_options_dest'] +
+      '/' + vars['victoriametrics_service_deploy_name'] }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - "{{ 'Restart ' + vars['victoriametrics_service_deploy_name'] }}"
+- name: "{{ 'victoriametrics | Enable ' +
+    vars['victoriametrics_service_deploy_name'] + ' service' }}"
+  ansible.builtin.systemd:
+    name: "{{ vars['victoriametrics_service_deploy_name'] }}"
+    enabled: "yes"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+       community.general.json_query(vars['victoriametrics_service_enable_query'])
+       is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+       community.general.json_query(vars['victoriametrics_service_enable_query']) ==
+       'true'"

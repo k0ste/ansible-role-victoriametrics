@@ -1,0 +1,14 @@
+{% if vg['sanitize_metric_name'] is defined and
+  vg['sanitize_metric_name'] in 'true' %}
+{{ ' --graphite.sanitizeMetricName' -}}
+{% endif %}
+{% if vg['listen_addr'] is defined and vg['listen_addr'] != '' %}
+{{ ' --graphiteListenAddr=\'' + vg['listen_addr'] + '\'' -}}
+{% endif %}
+{% if vg['listen_addr_use_proxy_protocol'] is defined and
+  vg['listen_addr_use_proxy_protocol'] in 'true' %}
+{{ ' --graphiteListenAddr.useProxyProtocol' -}}
+{% endif %}
+{% if vg['trim_timestamp'] is defined and vg['trim_timestamp'] != '' %}
+{{ ' --graphiteTrimTimestamp=\'' + vg['trim_timestamp'] + '\'' -}}
+{% endif %}

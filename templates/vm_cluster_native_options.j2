@@ -1,0 +1,32 @@
+{% if vcn['vminsert_conns_shutdown_duration'] is defined and
+  vcn['vminsert_conns_shutdown_duration'] != '' %}
+{{ ' --clusternative.vminsertConnsShutdownDuration=\'' +
+  vcn['vminsert_conns_shutdown_duration'] + '\'' -}}
+{% endif %}
+{% if vcn['listen_addr'] is defined and vcn['listen_addr'] != '' %}
+{{ ' --clusternativeListenAddr=\'' + vcn['listen_addr'] + '\'' -}}
+{% endif %}
+{% if vcn['disable_compression'] is defined and
+vcn['disable_compression'] in 'true' %}
+{{ ' --clusternative.disableCompression' -}}
+{% endif %}
+{% if vcn['max_concurrent_requests'] is defined and
+  vcn['max_concurrent_requests'] != '' %}
+{{ ' --clusternative.maxConcurrentRequests=\'' ~
+  vcn['max_concurrent_requests'] ~ '\'' -}}
+{% endif %}
+{% if vcn['max_queue_duration'] is defined and
+  vcn['max_queue_duration'] != '' %}
+{{ ' --clusternative.maxQueueDuration=\'' + vcn['max_queue_duration'] + '\'' -}}
+{% endif %}
+{% if vcn['max_tag_keys'] is defined and vcn['max_tag_keys'] != '' %}
+{{ ' --clusternative.maxTagKeys=\'' ~ vcn['max_tag_keys'] ~ '\'' -}}
+{% endif %}
+{% if vcn['max_tag_value_suffixes_per_search'] is defined and
+  vcn['max_tag_value_suffixes_per_search'] != '' %}
+{{ ' --clusternative.maxTagValueSuffixesPerSearch=\'' ~
+  vcn['max_tag_value_suffixes_per_search'] ~ '\'' -}}
+{% endif %}
+{% if vcn['max_tag_values'] is defined and vcn['max_tag_values'] != '' %}
+{{ ' --clusternative.maxTagValues=\'' ~ vcn['max_tag_values'] ~ '\'' -}}
+{% endif %}

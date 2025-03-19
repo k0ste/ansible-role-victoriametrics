@@ -1,0 +1,17 @@
+{% if v['insert_max_queue_duration'] is defined and
+  v['insert_max_queue_duration'] != '' %}
+{{ ' --insert.maxQueueDuration=\'' + v['insert_max_queue_duration'] + '\'' -}}
+{% endif %}
+{% if v['intern_string_cache_expire_duration'] is defined and
+  v['intern_string_cache_expire_duration'] != '' %}
+{{ ' --internStringCacheExpireDuration=\'' +
+  v['intern_string_cache_expire_duration'] + '\'' -}}
+{% endif %}
+{% if v['intern_string_disable_cache'] is defined and
+  v['intern_string_disable_cache'] in 'true' %}
+{{ ' --internStringDisableCache' -}}
+{% endif %}
+{% if v['intern_string_max_len'] is defined and
+  v['intern_string_max_len'] != '' %}
+{{ ' --internStringMaxLen=\'' ~ v['intern_string_max_len'] ~ '\'' -}}
+{% endif %}

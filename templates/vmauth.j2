@@ -1,0 +1,113 @@
+{{ '## vmauth' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{% if vars['victoriametrics_service_settings_vmauth'] is defined and
+  vars['victoriametrics_service_settings_vmauth'] != '' %}
+{% for v in vars['victoriametrics_service_settings_vmauth'] %}
+{% if loop['first'] %}
+{{ 'OPTIONS=\"' -}}
+{% endif %}
+{% if v['backend'] is defined and v['backend'] != '' %}
+{% for vb in v['backend'] %}
+{%- include 'vm_backend_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['config_check_interval'] is defined and
+  v['config_check_interval'] != '' %}
+{{ ' --configCheckInterval=\'' + v['config_check_interval'] + '\'' -}}
+{% endif %}
+{% if v['discover_backend_ips'] is defined and v['discover_backend_ips'] in
+  'true' %}
+{{ ' --discoverBackendIPs' -}}
+{% endif %}
+{% if v['discover_backend_ips_interval'] is defined and
+  v['discover_backend_ips_interval'] != '' %}
+{{ ' --discoverBackendIPsInterval=\'' + v['discover_backend_ips_interval'] +
+  '\'' -}}
+{% endif %}
+{%- include 'vm_generic_options.j2' -%}
+{% if v['fail_timeout'] is defined and v['fail_timeout'] != '' %}
+{{ ' --failTimeout=\'' + v['fail_timeout'] + '\'' -}}
+{% endif %}
+{% if v['http'] is defined and v['http'] != '' %}
+{% for vh in v['http'] %}
+{%- include 'vm_http_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['idle_conn_timeout'] is defined and v['idle_conn_timeout'] != '' %}
+{{ ' --idleConnTimeout=\'' + v['idle_conn_timeout'] + '\'' -}}
+{% endif %}
+{%- include 'vm_intern_options.j2' -%}
+{% if v['load_balancing_policy'] is defined and v['load_balancing_policy'] in
+  ['least_loaded', 'first_available'] %}
+{{ ' --loadBalancingPolicy=\'' + v['load_balancing_policy'] + '\'' -}}
+{% endif %}
+{% if v['log_invalid_auth_tokens'] is defined and
+  v['log_invalid_auth_tokens'] in 'true' %}
+{{ ' --logInvalidAuthTokens' -}}
+{% endif %}
+{% if v['logger'] is defined and v['logger'] != '' %}
+{% for vi in v['logger'] %}
+{%- include 'vm_logger_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['max_concurrent_per_user_requests'] is defined and
+  v['max_concurrent_per_user_requests'] != '' %}
+{{ ' --maxConcurrentPerUserRequests=\'' ~
+  v['max_concurrent_per_user_requests'] ~ '\'' -}}
+{% endif %}
+{% if v['max_concurrent_requests'] is defined and
+  v['max_concurrent_requests'] != '' %}
+{{ ' --maxConcurrentRequests=\'' ~ v['max_concurrent_requests'] ~ '\'' -}}
+{% endif %}
+{% if v['max_idle_conns_per_backend'] is defined and
+  v['max_idle_conns_per_backend'] != '' %}
+{{ ' --maxIdleConnsPerBackend=\'' ~ v['max_idle_conns_per_backend'] ~ '\'' -}}
+{% endif %}
+{% if v['max_request_body_size_to_retry'] is defined and
+  v['max_request_body_size_to_retry'] != '' %}
+{{ ' --maxRequestBodySizeToRetry=\'' ~ v['max_request_body_size_to_retry'] ~
+  '\'' -}}
+{% endif %}
+{%- include 'vm_memory_options.j2' -%}
+{% if v['metrics'] is defined and v['metrics'] != '' %}
+{% for vm in v['metrics'] %}
+{%- include 'vm_metrics_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_pprof_options.j2' -%}
+{% if v['pushmetrics'] is defined and v['pushmetrics'] != '' %}
+{% for vp in v['pushmetrics'] %}
+{%- include 'vm_pushmetrics_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['reload_auth_key'] is defined and v['reload_auth_key'] != '' %}
+{{ ' --reloadAuthKey=\'' + v['reload_auth_key'] + '\'' -}}
+{% endif %}
+{% if v['remove_xff_http_header_value'] is defined and
+  v['remove_xff_http_header_value'] in 'true' %}
+{{ ' --removeXFFHTTPHeaderValue' -}}
+{% endif %}
+{% if v['response_timeout'] is defined and v['response_timeout'] != '' %}
+{{ ' --responseTimeout=\'' + v['response_timeout'] + '\'' -}}
+{% endif %}
+{% if v['retry_status_codes'] is defined and v['retry_status_codes'] != '' %}
+{% if v['retry_status_codes'] is string %}
+{{ ' --retryStatusCodes=' + v['retry_status_codes'] -}}
+{% elif v['retry_status_codes'] is sequence %}
+{{ ' --retryStatusCodes=\'' + (v['retry_status_codes'] | join(",")) + '\'' -}}
+{% endif %}
+{% endif %}
+{% if v['tls'] is defined and v['tls'] != '' %}
+{% for vt in v['tls'] %}
+{%- include 'vm_tls_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if loop['last'] %}
+{{- '\"' }}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ 'OPTIONS=""' }}
+{% endif %}

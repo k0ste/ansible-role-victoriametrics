@@ -1,0 +1,47 @@
+{% if vh['conn_timeout'] is defined and vh['conn_timeout'] != '' %}
+{{ ' --http.connTimeout=\'' + vh['conn_timeout'] + '\'' -}}
+{% endif %}
+{% if vh['disable_response_compression'] is defined and
+  vh['disable_response_compression'] in 'true' %}
+{{ ' --http.disableResponseCompression' -}}
+{% endif %}
+{% if vh['header_csp'] is defined and vh['header_csp'] != '' %}
+{{ ' --http.header.csp=\\\"' + vh['header_csp'] + '\\\"' -}}
+{% endif %}
+{% if vh['header_frame_options'] is defined and
+  vh['header_frame_options'] != '' %}
+{{ ' --http.header.frameOptions=\'' + vh['header_frame_options'] + '\'' -}}
+{% endif %}
+{% if vh['header_hsts'] is defined and vh['header_hsts'] != '' %}
+{{ ' --http.header.hsts=\\\"' + vh['header_hsts'] + '\\\"' -}}
+{% endif %}
+{% if vh['idle_conn_timeout'] is defined and
+  vh['idle_conn_timeout'] != '' %}
+{{ ' --http.idleConnTimeout=\'' + vh['idle_conn_timeout'] + '\'' -}}
+{% endif %}
+{% if vh['max_graceful_shutdown_duration'] is defined and
+  vh['max_graceful_shutdown_duration'] != '' %}
+{{ ' --http.maxGracefulShutdownDuration=\'' +
+  vh['max_graceful_shutdown_duration'] + '\'' -}}
+{% endif %}
+{% if vh['path_prefix'] is defined and vh['path_prefix'] != '' %}
+{{ ' --http.pathPrefix=\'' + vh['path_prefix'] + '\'' -}}
+{% endif %}
+{% if vh['shutdown_delay'] is defined and vh['shutdown_delay'] != '' %}
+{{ ' --http.shutdownDelay=\'' + vh['shutdown_delay'] + '\'' -}}
+{% endif %}
+{% if vh['auth_password'] is defined and vh['auth_password'] != '' %}
+{{ ' --httpAuth.password=\'' + vh['auth_password'] + '\'' -}}
+{% endif %}
+{% if vh['auth_username'] is defined and vh['auth_username'] != '' %}
+{{ ' --httpAuth.username=\'' + vh['auth_username'] + '\'' -}}
+{% endif %}
+{% if vh['listen_addr'] is defined and vh['listen_addr'] != '' %}
+{% if vh['listen_addr'] is string %}
+{{ ' --httpListenAddr=\'' + vh['listen_addr'] + '\'' -}}
+{% elif vh['listen_addr'] is sequence %}
+{% for vhl in vh['listen_addr'] %}
+{{ ' --httpListenAddr=\'' + vhl + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}

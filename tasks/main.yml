@@ -1,0 +1,22 @@
+---
+- name: "victoriametrics | Include pre requisite tasks"
+  ansible.builtin.import_tasks:
+    file: "pre_requisite.yml"
+- name: "victoriametrics | Include packages tasks"
+  ansible.builtin.include_tasks:
+    file: "packages.yml"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+       community.general.json_query(vars['victoriametrics_install_package']) is
+       defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+       community.general.json_query(vars['victoriametrics_install_package']) ==
+       'true'"
+  vars:
+    victoriametrics_install_package: "[] | map(&install_package || 'false', @) |
+      [0]"
+- name: "victoriametrics | Include deployment tasks"
+  ansible.builtin.import_tasks:
+    file: "deploy.yml"

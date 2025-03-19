@@ -1,0 +1,4 @@
+{% if v['rpc_disable_compression'] is defined and
+  v['rpc_disable_compression'] in 'true' %}
+{{ ' --rpc.disableCompression' -}}
+{% endif %}

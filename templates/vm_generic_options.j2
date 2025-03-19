@@ -1,0 +1,17 @@
+{% if v['deny_query_tracing'] is defined and
+  v['deny_query_tracing'] in 'true' %}
+{{ ' --denyQueryTracing' -}}
+{% endif %}
+{% if v['enable_tcp6'] is defined and v['enable_tcp6'] in 'true' %}
+{{ ' --enableTCP6' -}}
+{% endif %}
+{% if v['filestream_disable_fadvise'] is defined and
+  v['filestream_disable_fadvise'] in 'true' %}
+{{ ' --filestream.disableFadvise' -}}
+{% endif %}
+{% if v['flags_auth_key'] is defined and v['flags_auth_key'] != '' %}
+{{ ' --flagsAuthKey=\'' + v['flags_auth_key'] + '\'' -}}
+{% endif %}
+{% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] in 'true' %}
+{{ ' --fs.disableMmap' -}}
+{% endif %}

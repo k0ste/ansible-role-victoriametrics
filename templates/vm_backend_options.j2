@@ -1,0 +1,16 @@
+{% if vb['tls_ca_file'] is defined and vb['tls_ca_file'] != '' %}
+{{ ' --backend.TLSCAFile=\'' + vb['tls_ca_file'] + '\'' -}}
+{% endif %}
+{% if vb['tls_cert_file'] is defined and vb['tls_cert_file'] != '' %}
+{{ ' --backend.TLSCertFile=\'' + vb['tls_cert_file'] + '\'' -}}
+{% endif %}
+{% if vb['tls_key_file'] is defined and vb['tls_key_file'] != '' %}
+{{ ' --backend.TLSKeyFile=\'' + vb['tls_key_file'] + '\'' -}}
+{% endif %}
+{% if vb['tls_server_name'] is defined and vb['tls_server_name'] != '' %}
+{{ ' --backend.TLSServerName=\'' + vb['tls_server_name'] + '\'' -}}
+{% endif %}
+{% if vb['tls_insecure_skip_verify'] is defined and
+  vb['tls_insecure_skip_verify'] in 'true' %}
+{{ ' --backend.tlsInsecureSkipVerify' -}}
+{% endif %}

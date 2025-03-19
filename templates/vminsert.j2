@@ -1,0 +1,139 @@
+{{ '## vminsert' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{% if vars['victoriametrics_service_settings_vminsert'] is defined and
+  vars['victoriametrics_service_settings_vminsert'] != '' %}
+{% for v in vars['victoriametrics_service_settings_vminsert'] %}
+{% if loop['first'] %}
+{{ 'OPTIONS=\"' -}}
+{% endif %}
+{%- include 'vm_cache_options.j2' -%}
+{% if v['cluster_native'] is defined and v['cluster_native'] != '' %}
+{% for vcn in v['cluster_native'] %}
+{%- include 'vm_cluster_native_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['csv_trim_timestamp'] is defined and v['csv_trim_timestamp'] != '' %}
+{{ ' --csvTrimTimestamp=\'' + v['csv_trim_timestamp'] + '\'' -}}
+{% endif %}
+{% if v['datadog'] is defined and v['datadog'] != '' %}
+{% for vd in v['datadog'] %}
+{% if vd['max_insert_request_size'] is defined and
+  vd['max_insert_request_size'] != '' %}
+{{ ' --datadog.maxInsertRequestSize=\'' + vd['max_insert_request_size'] +
+  '\'' -}}
+{% endif %}
+{% if vd['sanitize_metric_name'] is defined and
+  vd['sanitize_metric_name'] in 'true' %}
+{{ ' --datadog.sanitizeMetricName' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{%- include 'vm_generic_options.j2' -%}
+{% if v['disable_rerouting'] is defined and v['disable_rerouting'] in 'true' %}
+{{ ' --disableRerouting' -}}
+{% endif %}
+{% if v['disable_rerouting_on_unavailable'] is defined and
+  v['disable_rerouting_on_unavailable'] in 'true' %}
+{{ ' --disableReroutingOnUnavailable' -}}
+{% endif %}
+{% if v['drop_samples_on_overload'] is defined and
+  v['drop_samples_on_overload'] in 'true' %}
+{{ ' --dropSamplesOnOverload' -}}
+{% endif %}
+{% if v['graphite'] is defined and v['graphite'] != '' %}
+{% for vg in v['graphite'] %}
+{%- include 'vm_graphite_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['http'] is defined and v['http'] != '' %}
+{% for vh in v['http'] %}
+{%- include 'vm_http_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['import_max_line_len'] is defined and v['import_max_line_len'] != '' %}
+{{ ' --import.maxLineLen=\'' + v['import_max_line_len'] + '\'' -}}
+{% endif %}
+{% if v['influxdb'] is defined and v['influxdb'] != '' %}
+{% for vi in v['influxdb'] %}
+{%- include 'vm_influxdb_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_intern_options.j2' -%}
+{% if v['logger'] is defined and v['logger'] != '' %}
+{% for vi in v['logger'] %}
+{%- include 'vm_logger_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_memory_options.j2' -%}
+{% if v['max_insert_request_size'] is defined and
+  v['max_insert_request_size'] != '' %}
+{{ ' --maxInsertRequestSize=\'' + v['max_insert_request_size'] + '\'' -}}
+{% endif %}
+{% if v['max_label_name_len'] is defined and
+  v['max_label_name_len'] != '' %}
+{{ ' --maxLabelNameLen=\'' ~ v['max_label_name_len'] ~ '\'' -}}
+{% endif %}
+{% if v['max_label_value_len'] is defined and
+  v['max_label_value_len'] != '' %}
+{{ ' --maxLabelValueLen=\'' ~ v['max_label_value_len'] ~ '\'' -}}
+{% endif %}
+{% if v['max_labels_per_timeseries'] is defined and
+  v['max_labels_per_timeseries'] != '' %}
+{{ ' --maxLabelsPerTimeseries=\'' ~ v['max_labels_per_timeseries'] ~ '\'' -}}
+{% endif %}
+{% if v['metrics'] is defined and v['metrics'] != '' %}
+{% for vm in v['metrics'] %}
+{%- include 'vm_metrics_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['newrelic_max_insert_request_size'] is defined and
+  v['newrelic_max_insert_request_size'] != '' %}
+{{ ' --newrelic.maxInsertRequestSize=\'' +
+  v['newrelic_max_insert_request_size'] + '\'' -}}
+{% endif %}
+{% if v['opentelemetry_use_prometheus_naming'] is defined and
+  v['opentelemetry_use_prometheus_naming'] in 'true' %}
+{{ ' --opentelemetry.usePrometheusNaming' -}}
+{% endif %}
+{% if v['opentsdb'] is defined and v['opentsdb'] != '' %}
+{% for vo in v['opentsdb'] %}
+{%- include 'vm_opentsdb_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_pprof_options.j2' -%}
+{% if v['pushmetrics'] is defined and v['pushmetrics'] != '' %}
+{% for vp in v['pushmetrics'] %}
+{%- include 'vm_pushmetrics_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['relabel_config_check_interval'] is defined and
+  v['relabel_config_check_interval'] != '' %}
+{{ ' --relabelConfigCheckInterval=\'' + v['relabel_config_check_interval'] +
+  '\'' -}}
+{% endif %}
+{% if v['replication_factor'] is defined and v['replication_factor'] != '' %}
+{{ ' --replicationFactor=\'' ~ v['replication_factor'] ~ '\'' -}}
+{% endif %}
+{%- include 'vm_rpc_options.j2' -%}
+{% if v['sort_labels'] is defined and v['sort_labels'] in 'true' %}
+{{ ' --sortLabels' -}}
+{% endif %}
+{%- include 'vm_storage_options.j2' -%}
+{% if v['tls'] is defined and v['tls'] != '' %}
+{% for vt in v['tls'] %}
+{%- include 'vm_tls_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['use_prom_compatible_naming'] is defined and
+  v['use_prom_compatible_naming'] in 'true' %}
+{{ ' --usePromCompatibleNaming' -}}
+{% endif %}
+{% if loop['last'] %}
+{{- '\"' }}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ 'OPTIONS=""' }}
+{% endif %}

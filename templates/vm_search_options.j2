@@ -1,0 +1,229 @@
+{% if vs['max_tag_keys'] is defined and vs['max_tag_keys'] != '' %}
+{{ ' --search.maxTagKeys=\'' ~ vs['max_tag_keys'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_tag_values'] is defined and vs['max_tag_values'] != '' %}
+{{ ' --search.maxTagValues=\'' ~ vs['max_tag_values'] ~ '\'' -}}
+{% endif %}
+{% if vs['cache_timestamp_offset'] is defined and
+  vs['cache_timestamp_offset'] != '' %}
+{{ ' --search.cacheTimestampOffset=\'' + vs['cache_timestamp_offset'] + '\'' -}}
+{% endif %}
+{% if vs['deny_partial_response'] is defined and
+  vs['deny_partial_response'] in 'true' %}
+{{ ' --search.denyPartialResponse' -}}
+{% endif %}
+{% if vs['disable_cache'] is defined and vs['disable_cache'] in 'true' %}
+{{ ' --search.disableCache' -}}
+{% endif %}
+{% if vs['disable_implicit_conversion'] is defined and
+  vs['disable_implicit_conversion'] in 'true' %}
+{{ ' --search.disableImplicitConversion' -}}
+{% endif %}
+{% if vs['graphite_max_points_per_series'] is defined and
+  vs['graphite_max_points_per_series'] != '' %}
+{{ ' --search.graphiteMaxPointsPerSeries=\'' ~
+  vs['graphite_max_points_per_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['graphite_storage_step'] is defined and
+  vs['graphite_storage_step'] != '' %}
+{{ ' --search.graphiteStorageStep=\'' + vs['graphite_storage_step'] + '\'' -}}
+{% endif %}
+{% if vs['ignore_extra_filters_at_labels_api'] is defined and
+  vs['ignore_extra_filters_at_labels_api'] in 'true' %}
+{{ ' --search.ignoreExtraFiltersAtLabelsAPI' -}}
+{% endif %}
+{% if vs['inmemory_buf_size_bytes'] is defined and
+  vs['inmemory_buf_size_bytes'] != '' %}
+{{ ' --search.inmemoryBufSizeBytes=\'' + vs['inmemory_buf_size_bytes'] +
+  '\'' -}}
+{% endif %}
+{% if vs['latency_offset'] is defined and vs['latency_offset'] != '' %}
+{{ ' --search.latencyOffset=\'' + vs['latency_offset'] + '\'' -}}
+{% endif %}
+{% if vs['log_implicit_conversion'] is defined and
+  vs['log_implicit_conversion'] in 'true' %}
+{{ ' --search.logImplicitConversion' -}}
+{% endif %}
+{% if vs['log_query_memory_usage'] is defined and
+  vs['log_query_memory_usage'] != '' %}
+{{ ' --search.logQueryMemoryUsage=\'' + vs['log_query_memory_usage'] + '\'' -}}
+{% endif %}
+{% if vs['log_slow_query_duration'] is defined and
+  vs['log_slow_query_duration'] != '' %}
+{{ ' --search.logSlowQueryDuration=\'' + vs['log_slow_query_duration'] +
+  '\'' -}}
+{% endif %}
+{% if vs['max_binary_op_pushdown_label_values'] is defined and
+  vs['max_binary_op_pushdown_label_values'] != '' %}
+{{ ' --search.maxBinaryOpPushdownLabelValues=\'' +
+  vs['max_binary_op_pushdown_label_values'] + '\'' -}}
+{% endif %}
+{% if vs['max_concurrent_requests'] is defined and
+  vs['max_concurrent_requests'] != '' %}
+{{ ' --search.maxConcurrentRequests=\'' ~ vs['max_concurrent_requests'] +
+  '\'' -}}
+{% endif %}
+{% if vs['max_delete_duration'] is defined and
+  vs['max_delete_duration'] != '' %}
+{{ ' --search.maxDeleteDuration=\'' ~ vs['max_delete_duration'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_delete_series'] is defined and
+  vs['max_delete_series'] != '' %}
+{{ ' --search.maxDeleteSeries=\'' ~ vs['max_delete_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_export_duration'] is defined and
+  vs['max_export_duration'] != '' %}
+{{ ' --search.maxExportDuration=\'' + vs['max_export_duration'] + '\'' -}}
+{% endif %}
+{% if vs['max_export_series'] is defined and vs['max_export_series'] != '' %}
+{{ ' --search.maxExportSeries=\'' ~ vs['max_export_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_federate_series'] is defined and
+  vs['max_federate_series'] != '' %}
+{{ ' --search.maxFederateSeries=\'' ~ vs['max_federate_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_graphite_series'] is defined and
+  vs['max_graphite_series'] != '' %}
+{{ ' --search.maxGraphiteSeries=\'' ~ vs['max_graphite_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_graphite_tag_keys'] is defined and
+  vs['max_graphite_tag_keys'] != '' %}
+{{ ' --search.maxGraphiteTagKeys=\'' ~ vs['max_graphite_tag_keys'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_graphite_tag_values'] is defined and
+  vs['max_graphite_tag_values'] != '' %}
+{{ ' --search.maxGraphiteTagValues=\'' ~ vs['max_graphite_tag_values'] ~
+  '\'' -}}
+{% endif %}
+{% if vs['max_labels_api_duration'] is defined and
+  vs['max_labels_api_duration'] != '' %}
+{{ ' --search.maxLabelsAPIDuration=\'' + vs['max_labels_api_duration'] +
+  '\'' -}}
+{% endif %}
+{% if vs['max_labels_api_series'] is defined and
+  vs['max_labels_api_series'] != '' %}
+{{ ' --search.maxLabelsAPISeries=\'' ~ vs['max_labels_api_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_lookback'] is defined and vs['max_lookback'] != '' %}
+{{ ' --search.maxLookback=\'' + vs['max_lookback'] + '\'' -}}
+{% endif %}
+{% if vs['max_memory_per_query'] is defined and
+  vs['max_memory_per_query'] != '' %}
+{{ ' --search.maxMemoryPerQuery=\'' + vs['max_memory_per_query'] + '\'' -}}
+{% endif %}
+{% if vs['max_points_per_timeseries'] is defined and
+  vs['max_points_per_timeseries'] != '' %}
+{{ ' --search.maxPointsPerTimeseries=\'' ~
+  vs['max_points_per_timeseries'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_points_subquery_per_timeseries'] is defined and
+  vs['max_points_subquery_per_timeseries'] != '' %}
+{{ ' --search.maxPointsSubqueryPerTimeseries=\'' ~
+  vs['max_points_subquery_per_timeseries'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_query_duration'] is defined and
+  vs['max_query_duration'] != '' %}
+{{ ' --search.maxQueryDuration=\'' + vs['max_query_duration'] + '\'' -}}
+{% endif %}
+{% if vs['max_query_len'] is defined and vs['max_query_len'] != '' %}
+{{ ' --search.maxQueryLen=\'' + vs['max_query_len'] + '\'' -}}
+{% endif %}
+{% if vs['max_queue_duration'] is defined and
+  vs['max_queue_duration'] != '' %}
+{{ ' --search.maxQueueDuration=\'' + vs['max_queue_duration'] + '\'' -}}
+{% endif %}
+{% if vs['max_response_series'] is defined and
+  vs['max_response_series'] != '' %}
+{{ ' --search.maxResponseSeries=\'' ~ vs['max_response_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_samples_per_query'] is defined and
+  vs['max_samples_per_query'] != '' %}
+{{ ' --search.maxSamplesPerQuery=\'' ~ vs['max_samples_per_query'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_samples_per_series'] is defined and
+  vs['max_samples_per_series'] != '' %}
+{{ ' --search.maxSamplesPerSeries=\'' ~ vs['max_samples_per_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_series'] is defined and vs['max_series'] != '' %}
+{{ ' --search.maxSeries=\'' ~ vs['max_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_series_per_aggr_func'] is defined and
+  vs['max_series_per_aggr_func'] != '' %}
+{{ ' --search.maxSeriesPerAggrFunc=\'' ~ vs['max_series_per_aggr_func'] ~
+  '\'' -}}
+{% endif %}
+{% if vs['max_staleness_interval'] is defined and
+  vs['max_staleness_interval'] != '' %}
+{{ ' --search.maxStalenessInterval=\'' + vs['max_staleness_interval'] + '\'' -}}
+{% endif %}
+{% if vs['max_status_request_duration'] is defined and
+  vs['max_status_request_duration'] != '' %}
+{{ ' --search.maxStatusRequestDuration=\'' +
+  vs['max_status_request_duration'] + '\'' -}}
+{% endif %}
+{% if vs['max_step_for_points_adjustment'] is defined and
+  vs['max_step_for_points_adjustment'] != '' %}
+{{ ' --search.maxStepForPointsAdjustment=\'' +
+  vs['max_step_for_points_adjustment'] + '\'' -}}
+{% endif %}
+{% if vs['max_tsdb_status_series'] is defined and
+  vs['max_tsdb_status_series'] != '' %}
+{{ ' --search.maxTSDBStatusSeries=\'' ~ vs['max_tsdb_status_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_tag_value_suffixes_per_search'] is defined and
+  vs['max_tag_value_suffixes_per_search'] != '' %}
+{{ ' --search.maxTagValueSuffixesPerSearch=\'' ~
+  vs['max_tag_value_suffixes_per_search'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_unique_timeseries'] is defined and
+  vs['max_unique_timeseries'] != '' %}
+{{ ' --search.maxUniqueTimeseries=\'' + vs['max_unique_timeseries'] + '\'' -}}
+{% endif %}
+{% if vs['max_workers_per_query'] is defined and
+  vs['max_workers_per_query'] != '' %}
+{{ ' --search.maxWorkersPerQuery=\'' ~ vs['max_workers_per_query'] ~ '\'' -}}
+{% endif %}
+{% if vs['min_staleness_interval'] is defined and
+  vs['max_workers_per_query'] != '' %}
+{{ ' --search.search_min_staleness_interval=\'' +
+  vs['min_staleness_interval'] + '\'' -}}
+{% endif %}
+{% if vs['min_window_for_instant_rollup_optimization'] is defined and
+  vs['min_window_for_instant_rollup_optimization'] != '' %}
+{{ ' --search.minWindowForInstantRollupOptimization=\'' +
+  vs['min_window_for_instant_rollup_optimization'] + '\'' -}}
+{% endif %}
+{% if vs['no_stale_markers'] is defined and vs['no_stale_markers'] in 'true' %}
+{{ ' --search.noStaleMarkers' -}}
+{% endif %}
+{% if vs['query_stats_last_queries_count'] is defined and
+  vs['query_stats_last_queries_count'] != '' %}
+{{ ' --search.queryStats.lastQueriesCount=\'' ~
+  vs['query_stats_last_queries_count'] ~ '\'' -}}
+{% endif %}
+{% if vs['query_stats_min_query_duration'] is defined and
+  vs['query_stats_min_query_duration'] != '' %}
+{{ ' --search.queryStats.minQueryDuration=\'' +
+  vs['query_stats_min_query_duration'] + '\'' -}}
+{% endif %}
+{% if vs['reset_cache_auth_key'] is defined and
+  vs['reset_cache_auth_key'] != '' %}
+{{ ' --search.resetCacheAuthKey=\'' + vs['reset_cache_auth_key'] + '\'' -}}
+{% endif %}
+{% if vs['reset_rollup_result_cache_on_startup'] is defined and
+  vs['reset_rollup_result_cache_on_startup'] in 'true' %}
+{{ ' --search.resetRollupResultCacheOnStartup' -}}
+{% endif %}
+{% if vs['set_lookback_to_step'] is defined and
+  vs['set_lookback_to_step'] in 'true' %}
+{{ ' --search.setLookbackToStep' -}}
+{% endif %}
+{% if vs['skip_slow_replicas'] is defined and
+  vs['skip_slow_replicas'] in 'true' %}
+{{ ' --search.skipSlowReplicas' -}}
+{% endif %}
+{% if vs['tenant_cache_expire_duration'] is defined and
+  vs['tenant_cache_expire_duration'] != '' %}
+{{ ' --search.tenantCacheExpireDuration=\'' +
+  vs['tenant_cache_expire_duration'] + '\'' -}}
+{% endif %}

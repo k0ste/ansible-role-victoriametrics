@@ -1,0 +1,7 @@
+{% if v['pprof_auth_key'] is defined and v['pprof_auth_key'] != '' %}
+{{ ' --pprofAuthKey=\'' + v['pprof_auth_key'] + '\'' -}}
+{% endif %}
+{% if v['prev_cache_removal_percent'] is defined and
+  v['prev_cache_removal_percent'] != '' %}
+{{ ' --prevCacheRemovalPercent=\'' + v['prev_cache_removal_percent'] + '\'' -}}
+{% endif %}

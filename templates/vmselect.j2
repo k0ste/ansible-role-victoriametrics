@@ -1,0 +1,99 @@
+{{ '## vmselect' }}
+{{ '# ' + ansible_managed }}
+{{ '# Do not edit manually' }}
+
+{% if vars['victoriametrics_service_settings_vmselect'] is defined and
+  vars['victoriametrics_service_settings_vmselect'] != '' %}
+{% for v in vars['victoriametrics_service_settings_vmselect'] %}
+{% if loop['first'] %}
+{{ 'OPTIONS=\"' -}}
+{% endif %}
+{%- include 'vm_cache_options.j2' -%}
+{% if v['cache_data_path'] is defined and v['cache_data_path'] != '' %}
+{{ ' --cacheDataPath=\'' + v['cache_data_path'] + '\'' -}}
+{% endif %}
+{% if v['cache_data_path'] is defined and v['cache_data_path'] != '' %}
+{{ ' --cacheDataPath=\'' + v['cache_data_path'] + '\'' -}}
+{% endif %}
+{% if v['cluster_native'] is defined and v['cluster_native'] != '' %}
+{% for vcn in v['cluster_native'] %}
+{%- include 'vm_cluster_native_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['dedup_min_scrape_interval'] is defined and
+  v['dedup_min_scrape_interval'] != '' %}
+{{ ' --dedup.minScrapeInterval=\'' + v['dedup_min_scrape_interval'] + '\'' -}}
+{% endif %}
+{% if v['delete_auth_key'] is defined and v['delete_auth_key'] != '' %}
+{{ ' --deleteAuthKey=\'' + v['delete_auth_key'] + '\'' -}}
+{% endif %}
+{%- include 'vm_generic_options.j2' -%}
+{% if v['global_replication_factor'] is defined and
+  v['global_replication_factor'] != '' %}
+{{ ' --globalReplicationFactor=\'' ~ v['global_replication_factor'] ~ '\'' -}}
+{% endif %}
+{% if v['graphite'] is defined and v['graphite'] != '' %}
+{% for vg in v['graphite'] %}
+{%- include 'vm_graphite_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['http'] is defined and v['http'] != '' %}
+{% for vh in v['http'] %}
+{%- include 'vm_http_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_intern_options.j2' -%}
+{% if v['logger'] is defined and v['logger'] != '' %}
+{% for vi in v['logger'] %}
+{%- include 'vm_logger_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_memory_options.j2' -%}
+{% if v['metrics'] is defined and v['metrics'] != '' %}
+{% for vm in v['metrics'] %}
+{%- include 'vm_metrics_options.j2' -%}
+{% endfor %}
+{% endif %}
+{%- include 'vm_pprof_options.j2' -%}
+{% if v['replication_factor'] is defined and v['replication_factor'] != '' %}
+{{ ' --replicationFactor=\'' ~ v['replication_factor'] ~ '\'' -}}
+{% endif %}
+{% if v['search'] is defined and v['search'] != '' %}
+{% for vs in v['search'] %}
+{%- include 'vm_search_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['select_node'] is defined and v['select_node'] != '' %}
+{% if v['select_node'] is string %}
+{{ ' --selectNode=\'' + v['select_node'] + '\'' -}}
+{% elif v['select_node'] is sequence %}
+{% for vsn in v['select_node'] %}
+{{ ' --selectNode=\'' + vsn + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{%- include 'vm_storage_options.j2' -%}
+{% if v['tls'] is defined and v['tls'] != '' %}
+{% for vt in v['tls'] %}
+{%- include 'vm_tls_options.j2' -%}
+{% endfor %}
+{% endif %}
+{% if v['vmalert_proxy_url'] is defined and v['vmalert_proxy_url'] != '' %}
+{{ ' --vmalert.proxyURL=\'' + v['vmalert_proxy_url'] + '\'' -}}
+{% endif %}
+{% if v['vmui_custom_dashboards_path'] is defined and
+  v['vmui_custom_dashboards_path'] != '' %}
+{{ ' --vmui.customDashboardsPath=\'' + v['vmui_custom_dashboards_path'] +
+  '\'' -}}
+{% endif %}
+{% if v['vmui_default_timezone'] is defined and
+  v['vmui_default_timezone'] != '' %}
+{{ ' --vmui.defaultTimezone=\'' + v['vmui_default_timezone'] + '\'' -}}
+{% endif %}
+{% if loop['last'] %}
+{{- '\"' }}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ 'OPTIONS=""' }}
+{% endif %}

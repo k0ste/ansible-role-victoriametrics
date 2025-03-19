@@ -1,0 +1,71 @@
+---
+- name: "victoriametrics | Assert that system manager is systemd"
+  ansible.builtin.assert:
+    that:
+      - "hostvars[inventory_hostname]['ansible_service_mgr'] == 'systemd'"
+    fail_msg: "System manager is not systemd"
+    quiet: "true"
+- name: "victoriametrics | Add the OS specific variables"
+  ansible.builtin.include_vars:
+    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+- name: "victoriametrics | Set facts about victoriametrics role"
+  ansible.builtin.set_fact:
+    victoriametrics_package_state:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].package_state | [0]') }}"
+    victoriametrics_service_settings_vminsert:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].settings[].vminsert[]') }}"
+    victoriametrics_service_settings_vmstorage:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].settings[].vmstorage[]') }}"
+    victoriametrics_service_settings_vmselect:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].settings[].vmselect[]') }}"
+    victoriametrics_service_settings_vmauth:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].settings[].vmauth[]') }}"
+    victoriametrics_vmauth_instance_settings:
+      "{{ hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query('[].settings[].vmauth[].config[] | [0]') }}"
+- name: "victoriametrics | Assert that package state in valid value"
+  ansible.builtin.assert:
+    that:
+      - "vars['victoriametrics_package_state'] in ['present', 'latest']"
+    fail_msg: "'package_state' must be in 'present' or 'latest'"
+    quiet: "true"
+  when:
+    - "vars['victoriametrics_package_state'] is defined"
+    - "vars['victoriametrics_package_state'] != []"
+    - "vars['victoriametrics_package_state'] != ''"
+- name: "victoriametrics | Set package state to 'present' cause value is not
+    defined"
+  ansible.builtin.set_fact:
+    victoriametrics_package_state: "present"
+  when:
+    - "vars['victoriametrics_package_state'] is defined"
+    - "vars['victoriametrics_package_state'] == ''"
+- name: "victoriametrics | Create /etc/conf.d directory"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['victoriametrics_options_dest'] }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  when:
+    - "(vars['victoriametrics_service_settings_vminsert'] is defined and
+      vars['victoriametrics_service_settings_vminsert'] not in ['', []]) or
+      (vars['victoriametrics_service_settings_vmstorage'] is defined and
+      vars['victoriametrics_service_settings_vmstorage'] not in ['', []]) or
+      (vars['victoriametrics_service_settings_vmselect'] is defined and
+      vars['victoriametrics_service_settings_vmselect'] not in ['', []])"
+- name: "victoriametrics | Create VictoriaMetrics config directory [vmauth]"
+  ansible.builtin.file:
+    path: "{{ hostvars[inventory_hostname]['victoriametrics_conf_dest'] }}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  when:
+    - "vars['victoriametrics_service_settings_vmauth'] is defined"
+    - "vars['victoriametrics_service_settings_vmauth'] not in ['', []]"

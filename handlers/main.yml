@@ -1,0 +1,86 @@
+---
+- name: "Restart vminsert"
+  ansible.builtin.systemd:
+    name: "vminsert"
+    daemon_reload: "yes"
+    state: "restarted"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vminsert'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vminsert'])
+      == 'true'"
+  vars:
+    victoriametrics_service_restart_vminsert:
+      "[].restart[] | map(&vminsert || 'false', @) | [0]"
+- name: "Restart vmstorage"
+  ansible.builtin.systemd:
+    name: "vmstorage"
+    daemon_reload: "yes"
+    state: "restarted"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmstorage'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmstorage'])
+      == 'true'"
+  vars:
+    victoriametrics_service_restart_vmstorage:
+      "[].restart[] | map(&vmstorage || 'false', @) | [0]"
+- name: "Restart vmselect"
+  ansible.builtin.systemd:
+    name: "vmselect"
+    daemon_reload: "yes"
+    state: "restarted"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmselect'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmselect'])
+      == 'true'"
+  vars:
+    victoriametrics_service_restart_vmselect:
+      "[].restart[] | map(&vmselect || 'false', @) | [0]"
+- name: "Restart vmauth"
+  ansible.builtin.systemd:
+    name: "vmauth"
+    daemon_reload: "yes"
+    state: "restarted"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmauth'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_restart_vmauth'])
+      == 'true'"
+  vars:
+    victoriametrics_service_restart_vmauth:
+      "[].restart[] | map(&vmauth || 'false', @) | [0]"
+- name: "Reload vmauth"
+  ansible.builtin.systemd:
+    name: "vmauth"
+    daemon_reload: "yes"
+    state: "reloaded"
+  when:
+    - "hostvars[inventory_hostname]['victoriametrics'] is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] != ''"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_reload_vmauth'])
+      is defined"
+    - "hostvars[inventory_hostname]['victoriametrics'] |
+      community.general.json_query(vars['victoriametrics_service_reload_vmauth'])
+      == 'true'"
+  vars:
+    victoriametrics_service_reload_vmauth:
+      "[].restart[] | map(&vmauth || 'false', @) | [0]"

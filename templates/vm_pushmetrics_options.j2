@@ -1,0 +1,32 @@
+{% if vp['disable_compression'] is defined and
+  vp['disable_compression'] in 'true' %}
+{{ ' --pushmetrics.disableCompression' -}}
+{% endif %}
+{% if vp['extra_label'] is defined and vp['extra_label'] is sequence %}
+{% for vp in vp['extra_label'] %}
+{% if (vp['key'] is defined and vp['key'] != '') and
+  (vp['value'] is defined and vp['value'] != '') %}
+{{ ' --pushmetrics.extraLabel=\'' + vp['key'] + '=\"' + vp['value'] + '\"\'' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if vp['header'] is defined and vp['header'] is sequence %}
+{% for vp in vp['header'] %}
+{% if (vp['key'] is defined and vp['key'] != '') and
+  (vp['value'] is defined and vp['value'] != '') %}
+{{ ' --pushmetrics.header=\'' + vp['key'] + ': ' + vp['value'] + '\'' -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if vp['interval'] is defined and vp['interval'] != '' %}
+{{ ' --pushmetrics.interval=\'' + vp['interval'] + '\'' -}}
+{% endif %}
+{% if vp['url'] is defined and vp['url'] != '' %}
+{% if vp['url'] is string %}
+{{ ' --pushmetrics.url=\'' + vp['url'] + '\'' -}}
+{% elif vp['url'] is sequence %}
+{% for vp in vp['url'] %}
+{{ ' --pushmetrics.url=\'' + vp + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}

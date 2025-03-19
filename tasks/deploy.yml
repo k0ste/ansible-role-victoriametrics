@@ -1,0 +1,44 @@
+---
+- name: "victoriametrics | Include vminsert deployment tasks"
+  when:
+    - "vars['victoriametrics_service_settings_vminsert'] is defined"
+    - "vars['victoriametrics_service_settings_vminsert'] != []"
+    - "vars['victoriametrics_service_settings_vminsert'] != ''"
+  block:
+    - name: "victoriametrics | Set fact for deployment task [vminsert]"
+      ansible.builtin.set_fact:
+        victoriametrics_service_deploy_name: 'vminsert'
+    - name: "victoriametrics | Include deployment tasks [vminsert]"
+      ansible.builtin.include_tasks:
+        file: "deploy.d/deploy_vm.yml"
+- name: "victoriametrics | Include vmselect deployment tasks"
+  when:
+    - "vars['victoriametrics_service_settings_vmselect'] is defined"
+    - "vars['victoriametrics_service_settings_vmselect'] != []"
+    - "vars['victoriametrics_service_settings_vmselect'] != ''"
+  block:
+    - name: "victoriametrics | Set fact for deployment task [vmselect]"
+      ansible.builtin.set_fact:
+        victoriametrics_service_deploy_name: 'vmselect'
+    - name: "victoriametrics | Include deployment tasks [vmselect]"
+      ansible.builtin.include_tasks:
+        file: "deploy.d/deploy_vm.yml"
+- name: "victoriametrics | Include vmstorage deployment tasks"
+  when:
+    - "vars['victoriametrics_service_settings_vmstorage'] is defined"
+    - "vars['victoriametrics_service_settings_vmstorage'] != []"
+    - "vars['victoriametrics_service_settings_vmstorage'] != ''"
+  block:
+    - name: "victoriametrics | Set fact for deployment task [vmstorage]"
+      ansible.builtin.set_fact:
+        victoriametrics_service_deploy_name: 'vmstorage'
+    - name: "victoriametrics | Include deployment tasks [vmstorage]"
+      ansible.builtin.include_tasks:
+        file: "deploy.d/deploy_vm.yml"
+- name: "victoriametrics | Include vmauth deployment tasks"
+  ansible.builtin.include_tasks:
+    file: "deploy.d/deploy_vmauth.yml"
+  when:
+    - "vars['victoriametrics_service_settings_vmauth'] is defined"
+    - "vars['victoriametrics_service_settings_vmauth'] != []"
+    - "vars['victoriametrics_service_settings_vmauth'] != ''"

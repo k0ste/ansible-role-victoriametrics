@@ -1,0 +1,4 @@
+---
+victoriametrics_package: 'victoriametrics'
+victoriametrics_options_dest: '/etc/conf.d'
+victoriametrics_conf_dest: '/etc/victoriametrics'

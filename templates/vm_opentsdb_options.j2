@@ -1,0 +1,26 @@
+{% if vo['http_listen_addr'] is defined and vo['http_listen_addr'] != '' %}
+{{ ' --opentsdbHTTPListenAddr=\'' + vo['http_listen_addr'] + '\'' -}}
+{% endif %}
+{% if vo['http_listen_addr_use_proxy_protocol'] is defined and
+  vo['http_listen_addr_use_proxy_protocol'] in 'true' %}
+{{ ' --opentsdbHTTPListenAddr.useProxyProtocol' -}}
+{% endif %}
+{% if vo['listen_addr'] is defined and vo['listen_addr'] != '' %}
+{{ ' --opentsdbListenAddr=\'' + vo['listen_addr'] + '\'' -}}
+{% endif %}
+{% if vo['listen_addr_use_proxy_protocol'] is defined and
+  vo['listen_addr_use_proxy_protocol'] in 'true' %}
+{{ ' --opentsdbListenAddr.useProxyProtocol' -}}
+{% endif %}
+{% if vo['trim_timestamp'] is defined and vo['trim_timestamp'] != '' %}
+{{ ' --opentsdbTrimTimestamp=\'' + vo['trim_timestamp'] + '\'' -}}
+{% endif %}
+{% if vo['http_max_insert_request_size'] is defined and
+  vo['http_max_insert_request_size'] != '' %}
+{{ ' --opentsdbhttp.maxInsertRequestSize=\'' +
+  vo['http_max_insert_request_size'] + '\'' -}}
+{% endif %}
+{% if vo['http_trim_timestamp'] is defined and
+  vo['http_trim_timestamp'] != '' %}
+{{ ' --opentsdbhttpTrimTimestamp=\'' + vo['http_trim_timestamp'] + '\'' -}}
+{% endif %}

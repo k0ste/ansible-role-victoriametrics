@@ -1,0 +1,40 @@
+{% if vi['database_names'] is defined and vi['database_names'] != '' %}
+{% if vi['database_names'] is string %}
+{{ ' --influx.databaseNames=\'' + vi['database_names'] + '\'' -}}
+{% elif vi['database_names'] is sequence %}
+{% for vi in vi['database_names'] %}
+{{ ' --influx.databaseNames=\'' + vi + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if vi['max_line_size'] is defined and vi['max_line_size'] != '' %}
+{{ ' --influx.maxLineSize=\'' + vi['max_line_size'] + '\'' -}}
+{% endif %}
+{% if vi['max_request_size'] is defined and vi['max_request_size'] != '' %}
+{{ ' --influx.maxRequestSize=\'' + vi['max_request_size'] + '\'' -}}
+{% endif %}
+{% if vi['db_label'] is defined and vi['db_label'] != '' %}
+{{ ' --influxDBLabel=\'' + vi['db_label'] + '\'' -}}
+{% endif %}
+{% if vi['listen_addr'] is defined and vi['listen_addr'] != '' %}
+{{ ' --influxListenAddr=\'' + vi['listen_addr'] + '\'' -}}
+{% endif %}
+{% if vi['listen_addr_use_proxy_protocol'] is defined and
+  vi['listen_addr_use_proxy_protocol'] in 'true' %}
+{{ ' --influxListenAddr.useProxyProtocol' -}}
+{% endif %}
+{% if vi['measurement_field_separator'] is defined and
+  vi['measurement_field_separator'] != '' %}
+{{ ' --influxMeasurementFieldSeparator=\'' +
+  vi['measurement_field_separator'] + '\'' -}}
+{% endif %}
+{% if vi['skip_measurement'] is defined and vi['skip_measurement'] in 'true' %}
+{{ ' --influxSkipMeasurement' -}}
+{% endif %}
+{% if vi['skip_single_field'] is defined and
+  vi['skip_single_field'] in 'true' %}
+{{ ' --influxSkipSingleField' -}}
+{% endif %}
+{% if vi['trim_timestamp'] is defined and vi['trim_timestamp'] != '' %}
+{{ ' --influxTrimTimestamp=\'' + vi['trim_timestamp'] + '\'' -}}
+{% endif %}

@@ -1,0 +1,19 @@
+{% if (vt['cert_file'] is defined and vt['cert_file'] != '') and
+  (vt['key_file'] is defined and vt['key_file'] != '') %}
+{{ ' --tls' -}}
+{{ ' --tlsCertFile=\'' + vt['cert_file'] + '\'' -}}
+{{ ' --tlsKeyFile=\'' + vt['key_file'] + '\'' -}}
+{% if vt['cipher_suites'] is defined and vt['cipher_suites'] != '' %}
+{% if vt['cipher_suites'] is string %}
+{{ ' --tlsCipherSuites=\'' + vt['cipher_suites'] + '\'' -}}
+{% elif vt['cipher_suites'] is sequence %}
+{% for vt in vt['cipher_suites'] %}
+{{ ' --tlsCipherSuites=\'' + vt + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if vt['min_version'] is defined and vt['min_version'] in ['TLS10', 'TLS11',
+  'TLS12', 'TLS13'] %}
+{{ ' --tlsMinVersion=\'' + vt['min_version']  + '\'' -}}
+{% endif %}
+{% endif %}

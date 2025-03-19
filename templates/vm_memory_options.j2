@@ -1,0 +1,12 @@
+{% if v['max_concurrent_inserts'] is defined and
+  v['max_concurrent_inserts'] != '' %}
+{{ ' --maxConcurrentInserts=\'' ~ v['max_concurrent_inserts'] ~ '\'' -}}
+{% endif %}
+{% if v['memory_allowed_bytes'] is defined and
+  v['memory_allowed_bytes'] != '' %}
+{{ ' --memory.allowedBytes=\'' + v['memory_allowed_bytes'] + '\'' -}}
+{% endif %}
+{% if v['memory_allowed_percent'] is defined and
+  v['memory_allowed_percent'] != '' %}
+{{ ' --memory.allowedPercent=\'' + v['memory_allowed_percent'] + '\'' -}}
+{% endif %}

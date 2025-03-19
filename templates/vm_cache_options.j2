@@ -1,0 +1,13 @@
+{% if v['blockcache_misses_before_caching'] is defined and
+  v['blockcache_misses_before_caching'] != '' %}
+{{ ' --blockcache.missesBeforeCaching=\'' ~
+  v['blockcache_misses_before_caching'] ~ '\'' -}}
+{% endif %}
+{% if v['cache_expire_duration'] is defined and
+  v['cache_expire_duration'] != '' %}
+{{ ' --cacheExpireDuration=\'' + v['cache_expire_duration'] + '\'' -}}
+{% endif %}
+{% if v['dedup_min_scrape_interval'] is defined and
+  v['dedup_min_scrape_interval'] != '' %}
+{{ ' --dedup.minScrapeInterval=\'' + v['dedup_min_scrape_interval'] + '\'' -}}
+{% endif %}

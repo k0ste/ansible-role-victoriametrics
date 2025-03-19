@@ -1,0 +1,46 @@
+{% if vs['cache_size_index_db_data_blocks'] is defined and
+  vs['cache_size_index_db_data_blocks'] != '' %}
+{{ ' --storage.cacheSizeIndexDBDataBlocks=\'' +
+  vs['cache_size_index_db_data_blocks'] + '\'' -}}
+{% endif %}
+{% if vs['cache_size_index_db_data_blocks_sparse'] is defined and
+  vs['cache_size_index_db_data_blocks_sparse'] != '' %}
+{{ ' --storage.cacheSizeIndexDBDataBlocksSparse=\'' +
+  vs['cache_size_index_db_data_blocks_sparse'] + '\'' -}}
+{% endif %}
+{% if vs['cache_size_index_db_index_blocks'] is defined and
+  vs['cache_size_index_db_index_blocks'] != '' %}
+{{ ' --storage.cacheSizeIndexDBIndexBlocks=\'' +
+  vs['cache_size_index_db_index_blocks'] + '\'' -}}
+{% endif %}
+{% if vs['cache_size_index_db_tag_filters'] is defined and
+  vs['cache_size_index_db_tag_filters'] != '' %}
+{{ ' --storage.cacheSizeIndexDBTagFilters=\'' +
+  vs['cache_size_index_db_tag_filters'] + '\'' -}}
+{% endif %}
+{% if vs['cache_size_storage_tsid'] is defined and
+  vs['cache_size_storage_tsid'] != '' %}
+{{ ' --storage.cacheSizeStorageTSID=\'' + vs['cache_size_storage_tsid'] +
+  '\'' -}}
+{% endif %}
+{% if vs['final_dedup_schedule_check_interval'] is defined and
+  vs['final_dedup_schedule_check_interval'] != '' %}
+{{ ' --storage.finalDedupScheduleCheckInterval=\'' +
+  vs['final_dedup_schedule_check_interval'] + '\'' -}}
+{% endif %}
+{% if vs['max_daily_series'] is defined and vs['max_daily_series'] != '' %}
+{{ ' --storage.maxDailySeries=\'' ~ vs['max_daily_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['max_hourly_series'] is defined and vs['max_hourly_series'] != '' %}
+{{ ' --storage.maxHourlySeries=\'' ~ vs['max_hourly_series'] ~ '\'' -}}
+{% endif %}
+{% if vs['min_free_disk_space_bytes'] is defined and
+  vs['min_free_disk_space_bytes'] != '' %}
+{{ ' --storage.minFreeDiskSpaceBytes=\'' + vs['min_free_disk_space_bytes'] +
+  '\'' -}}
+{% endif %}
+{% if vs['vminsert_conns_shutdown_duration'] is defined and
+  vs['vminsert_conns_shutdown_duration'] != '' %}
+{{ ' --storage.vminsertConnsShutdownDuration=\'' +
+  vs['vminsert_conns_shutdown_duration'] + '\'' -}}
+{% endif %}
