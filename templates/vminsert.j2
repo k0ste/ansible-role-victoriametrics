@@ -6,7 +6,7 @@
   vars['victoriametrics_service_settings_vminsert'] != '' %}
 {% for v in vars['victoriametrics_service_settings_vminsert'] %}
 {% if loop['first'] %}
-{{ 'OPTIONS=\"' -}}
+{{ 'VMINSERT_ARGS=\"' -}}
 {% endif %}
 {%- include 'vm_cache_options.j2' -%}
 {% if v['cluster_native'] is defined and v['cluster_native'] != '' %}
@@ -135,5 +135,5 @@
 {% endif %}
 {% endfor %}
 {% else %}
-{{ 'OPTIONS=""' }}
+{{ 'VMINSERT_ARGS=\"\"' }}
 {% endif %}

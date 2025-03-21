@@ -6,7 +6,7 @@
   vars['victoriametrics_service_settings_vmselect'] != '' %}
 {% for v in vars['victoriametrics_service_settings_vmselect'] %}
 {% if loop['first'] %}
-{{ 'OPTIONS=\"' -}}
+{{ 'VMSELECT_ARGS=\"' -}}
 {% endif %}
 {%- include 'vm_cache_options.j2' -%}
 {% if v['cache_data_path'] is defined and v['cache_data_path'] != '' %}
@@ -63,15 +63,6 @@
 {%- include 'vm_search_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['select_node'] is defined and v['select_node'] != '' %}
-{% if v['select_node'] is string %}
-{{ ' --selectNode=\'' + v['select_node'] + '\'' -}}
-{% elif v['select_node'] is sequence %}
-{% for vsn in v['select_node'] %}
-{{ ' --selectNode=\'' + vsn + '\'' -}}
-{% endfor %}
-{% endif %}
-{% endif %}
 {%- include 'vm_storage_options.j2' -%}
 {% if v['tls'] is defined and v['tls'] != '' %}
 {% for vt in v['tls'] %}
@@ -95,5 +86,5 @@
 {% endif %}
 {% endfor %}
 {% else %}
-{{ 'OPTIONS=""' }}
+{{ 'VMSELECT_ARGS=\"\"' }}
 {% endif %}

@@ -15,3 +15,21 @@
 {% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] in 'true' %}
 {{ ' --fs.disableMmap' -}}
 {% endif %}
+{% if v['select_node'] is defined and v['select_node'] != '' %}
+{% if v['select_node'] is string %}
+{{ ' --selectNode=\'' + v['select_node'] + '\'' -}}
+{% elif v['select_node'] is sequence %}
+{% for vsn in v['select_node'] %}
+{{ ' --selectNode=\'' + vsn + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if v['storage_node'] is defined and v['storage_node'] != '' %}
+{% if v['storage_node'] is string %}
+{{ ' --storageNode=\'' + v['storage_node'] + '\'' -}}
+{% elif v['storage_node'] is sequence %}
+{% for vsn in v['storage_node'] %}
+{{ ' --storageNode=\'' + vsn + '\'' -}}
+{% endfor %}
+{% endif %}
+{% endif %}

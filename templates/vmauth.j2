@@ -6,7 +6,7 @@
   vars['victoriametrics_service_settings_vmauth'] != '' %}
 {% for v in vars['victoriametrics_service_settings_vmauth'] %}
 {% if loop['first'] %}
-{{ 'OPTIONS=\"' -}}
+{{ 'VMAUTH_ARGS=\"' -}}
 {% endif %}
 {% if v['backend'] is defined and v['backend'] != '' %}
 {% for vb in v['backend'] %}
@@ -109,5 +109,5 @@
 {% endif %}
 {% endfor %}
 {% else %}
-{{ 'OPTIONS=""' }}
+{{ 'VMAUTH_ARGS=\"\"' }}
 {% endif %}

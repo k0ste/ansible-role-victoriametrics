@@ -6,7 +6,7 @@
   vars['victoriametrics_service_settings_vmstorage'] != '' %}
 {% for v in vars['victoriametrics_service_settings_vmstorage'] %}
 {% if loop['first'] %}
-{{ 'OPTIONS=\"' -}}
+{{ 'VMSTORAGE_ARGS=\"' -}}
 {% endif %}
 {%- include 'vm_cache_options.j2' -%}
 {% if v['deny_queries_outside_retention'] is defined and
@@ -99,5 +99,5 @@
 {% endif %}
 {% endfor %}
 {% else %}
-{{ 'OPTIONS=""' }}
+{{ 'VMSTORAGE_ARGS=\"\"' }}
 {% endif %}

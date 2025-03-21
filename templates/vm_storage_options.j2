@@ -1,12 +1,3 @@
-{% if v['storage_node'] is defined and v['storage_node'] != '' %}
-{% if v['storage_node'] is string %}
-{{ ' --storageNode=\'' + v['storage_node'] + '\'' -}}
-{% elif v['storage_node'] is sequence %}
-{% for vs in v['storage_node'] %}
-{{ ' --storageNode=\'' + vs + '\'' -}}
-{% endfor %}
-{% endif %}
-{% endif %}
 {% if v['vmstorage_dial_timeout'] is defined and
   v['vmstorage_dial_timeout'] != '' %}
 {{ ' --vmstorageDialTimeout=\'' + v['vmstorage_dial_timeout'] + '\'' -}}

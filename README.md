@@ -145,9 +145,6 @@ victoriametrics:
 # recommended setting this value to values smaller than `http`
 # 'idle_conn_timeout' set at backend services (default is '50s')
             idle_conn_timeout: '50s'
-
-
-
 # The expiry duration for caches for interned strings (default is '6m')
             intern_string_cache_expire_duration: '6m'
 # Whether to disable caches for interned strings. This may reduce memory usage
