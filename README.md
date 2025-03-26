@@ -10,10 +10,12 @@ scalable monitoring solution and time series database
 ## Extra
 
 The deployments expectes binaries from
-[cluster](//github.com/VictoriaMetrics/VictoriaMetrics/tree/cluster) branch of VM
+[cluster](//github.com/VictoriaMetrics/VictoriaMetrics/tree/cluster) branch of
+VictoriaMetrics
 
 
 ### Supported daemons:
+
 * `vmauth`
 * `vminsert`
 * `vmselect`
@@ -46,19 +48,50 @@ victoriametrics:
           - config:
 # VMAuth users configuration, see: https://docs.victoriametrics.com/vmauth/
               users:
-                - bearer_token: 'd4c762d5-dcd9-4635-b2a6-1245994fdcf0'
+                # Prometheus snapshots import
+                - username: 'snapshot'
+                  password: 'snapshot'
                   url_map:
                     - src_paths:
-                        - '/insert/.*'
+                        - '/insert/1/prometheus/api/v1/import'
                       url_prefix:
-                        - 'http://vminsert-1:8480/'
-                        - 'http://vminsert-2:8480/'
-                        - 'http://vminsert-3:8480/'
+                        - 'https://victoria1.example.com:8480/'
+                        - 'https://victoria2.example.com:8480/'
+                # Tenant 1 - vmui access
+                - username: 'admin'
+                  password: 'admin'
+                  url_map:
                     - src_paths:
-                        - '/select/.*'
+                        - '/vmui/.*'
+                        - '/prometheus/.*'
                       url_prefix:
-                        - 'http://vmselect-1:8481/'
-                        - 'http://vmselect-2:8481/'
+                        - 'https://victoria1.example.com:8481/select/1/'
+                        - 'https://victoria2.example.com:8481/select/1/'
+                # Tenant 1 - Grafana read
+                - bearer_token: 'token1'
+                  url_map:
+                    - src_paths:
+                        - '/api/v1/query'
+                        - '/api/v1/query_range'
+                        - '/api/v1/query_exemplars'
+                        - '/api/v1/metadata'
+                        - '/api/v1/rules'
+                        - '/api/v1/status/.*'
+                        - '/api/v1/export/.*'
+                        - '/api/v1/series'
+                        - '/api/v1/labels'
+                        - '/api/v1/label/.+/values'
+                      url_prefix:
+                        - 'https://victoria1.example.com:8481/select/1/prometheus/'
+                        - 'https://victoria2.example.com:8481/select/1/prometheus/'
+                # Tenant 1 - Remote Write
+                - bearer_token: 'token2'
+                  url_map:
+                    - src_paths:
+                        - '/api/v1/write'
+                      url_prefix:
+                        - 'https://victoria1.example.com:8480/insert/1/prometheus/'
+                        - 'https://victoria2.example.com:8480/insert/1/prometheus/'
             backend:
 # Optional path to TLS root CA file, which is used for TLS verification when
 # connecting to backends over HTTPS
@@ -102,9 +135,9 @@ victoriametrics:
 # usually faster for reading small data chunks than pread()
             fs_disable_mmap: 'true'
             http:
-# Incoming connections to listen address are closed after the configured timeout.
-# This may help evenly spreading load among a cluster of services behind
-# TCP-level load balancer. Zero value disables closing of incoming
+# Incoming connections to listen address are closed after the configured
+# timeout. This may help evenly spreading load among a cluster of services
+# behind TCP-level load balancer. Zero value disables closing of incoming
 # connections (default is '2m')
               - conn_timeout: '2m'
 # Disable compression of HTTP responses to save CPU resources. By default,
@@ -379,9 +412,9 @@ victoriametrics:
 # space usage for timestamp data (default '1s')
                 trim_timestamp: '1s'
             http:
-# Incoming connections to listen address are closed after the configured timeout.
-# This may help evenly spreading load among a cluster of services behind
-# TCP-level load balancer. Zero value disables closing of incoming
+# Incoming connections to listen address are closed after the configured
+# timeout. This may help evenly spreading load among a cluster of services
+# behind TCP-level load balancer. Zero value disables closing of incoming
 # connections (default is '2m')
               - conn_timeout: '2m'
 # Disable compression of HTTP responses to save CPU resources. By default,
@@ -706,9 +739,9 @@ victoriametrics:
 # 'https://host/path'
             force_merge_auth_key: ''
             http:
-# Incoming connections to listen address are closed after the configured timeout.
-# This may help evenly spreading load among a cluster of services behind
-# TCP-level load balancer. Zero value disables closing of incoming
+# Incoming connections to listen address are closed after the configured
+# timeout. This may help evenly spreading load among a cluster of services
+# behind TCP-level load balancer. Zero value disables closing of incoming
 # connections (default is '2m')
               - conn_timeout: '2m'
 # Disable compression of HTTP responses to save CPU resources. By default,
@@ -1049,9 +1082,9 @@ victoriametrics:
 # Sanitize metric names for the ingested Graphite data
               - sanitize_metric_name: 'true'
             http:
-# Incoming connections to listen address are closed after the configured timeout.
-# This may help evenly spreading load among a cluster of services behind
-# TCP-level load balancer. Zero value disables closing of incoming
+# Incoming connections to listen address are closed after the configured
+# timeout. This may help evenly spreading load among a cluster of services
+# behind TCP-level load balancer. Zero value disables closing of incoming
 # connections (default is '2m')
               - conn_timeout: '2m'
 # Disable compression of HTTP responses to save CPU resources. By default,

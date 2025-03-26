@@ -44,7 +44,7 @@
 {% endif %}
 {%- include 'vm_intern_options.j2' -%}
 {% if v['logger'] is defined and v['logger'] != '' %}
-{% for vi in v['logger'] %}
+{% for vl in v['logger'] %}
 {%- include 'vm_logger_options.j2' -%}
 {% endfor %}
 {% endif %}
