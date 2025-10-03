@@ -4,6 +4,7 @@
     - "vars['victoriametrics_service_settings_vminsert'] is defined"
     - "vars['victoriametrics_service_settings_vminsert'] != []"
     - "vars['victoriametrics_service_settings_vminsert'] != ''"
+    - "vars['victoriametrics_service_settings_vminsert'] != None"
   block:
     - name: "victoriametrics | Set fact for deployment task [vminsert]"
       ansible.builtin.set_fact:
@@ -16,6 +17,7 @@
     - "vars['victoriametrics_service_settings_vmselect'] is defined"
     - "vars['victoriametrics_service_settings_vmselect'] != []"
     - "vars['victoriametrics_service_settings_vmselect'] != ''"
+    - "vars['victoriametrics_service_settings_vmselect'] != None"
   block:
     - name: "victoriametrics | Set fact for deployment task [vmselect]"
       ansible.builtin.set_fact:
@@ -28,6 +30,7 @@
     - "vars['victoriametrics_service_settings_vmstorage'] is defined"
     - "vars['victoriametrics_service_settings_vmstorage'] != []"
     - "vars['victoriametrics_service_settings_vmstorage'] != ''"
+    - "vars['victoriametrics_service_settings_vmstorage'] != None"
   block:
     - name: "victoriametrics | Set fact for deployment task [vmstorage]"
       ansible.builtin.set_fact:
@@ -42,3 +45,4 @@
     - "vars['victoriametrics_service_settings_vmauth'] is defined"
     - "vars['victoriametrics_service_settings_vmauth'] != []"
     - "vars['victoriametrics_service_settings_vmauth'] != ''"
+    - "vars['victoriametrics_service_settings_vmauth'] != None"

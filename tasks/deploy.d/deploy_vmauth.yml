@@ -22,6 +22,7 @@
     - "vars['victoriametrics_vmauth_instance_settings'] is defined"
     - "vars['victoriametrics_vmauth_instance_settings'] != []"
     - "vars['victoriametrics_vmauth_instance_settings'] != ''"
+    - "vars['victoriametrics_vmauth_instance_settings'] != None"
   notify:
     - "Reload vmauth"
 - name: "victoriametrics | Enable vmauth service"
