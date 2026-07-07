@@ -2,96 +2,106 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{% if vars['victoriametrics_service_settings_vmstorage'] is defined and
-  vars['victoriametrics_service_settings_vmstorage'] != '' %}
-{% for v in vars['victoriametrics_service_settings_vmstorage'] %}
+{% if lookup('ansible.builtin.vars',
+  'victoriametrics_service_settings_vmstorage', default='')
+  not in ['', [], '[]', None] %}
+{% for v in lookup('ansible.builtin.vars',
+  'victoriametrics_service_settings_vmstorage') %}
 {% if loop['first'] %}
 {{ 'VMSTORAGE_ARGS=\"' -}}
 {% endif %}
-{%- include 'vm_cache_options.j2' -%}
+{%- include 'vm.d/cache_options.j2' -%}
 {% if v['deny_queries_outside_retention'] is defined and
-  v['deny_queries_outside_retention'] in 'true' %}
+  v['deny_queries_outside_retention'] == 'true' %}
 {{ ' --denyQueriesOutsideRetention' -}}
 {% endif %}
-{%- include 'vm_generic_options.j2' -%}
+{%- include 'vm.d/generic_options.j2' -%}
 {% if v['force_flush_auth_key'] is defined and
-  v['force_flush_auth_key'] != '' %}
+  v['force_flush_auth_key'] not in ['', [], '[]', None] %}
 {{ ' --forceFlushAuthKey=\'' + v['force_flush_auth_key'] + '\'' -}}
 {% endif %}
 {% if v['force_merge_auth_key'] is defined and
-  v['force_merge_auth_key'] != '' %}
+  v['force_merge_auth_key'] not in ['', [], '[]', None] %}
 {{ ' --forceMergeAuthKey=\'' + v['force_merge_auth_key'] + '\'' -}}
 {% endif %}
-{% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] in 'true' %}
+{% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] == 'true' %}
 {{ ' --fs.disableMmap' -}}
 {% endif %}
-{% if v['http'] is defined and v['http'] != '' %}
+{% if v['http'] is defined and v['http'] not in ['', [], '[]', None] %}
 {% for vh in v['http'] %}
-{%- include 'vm_http_options.j2' -%}
+{%- include 'vm.d/http_options.j2' -%}
 {% endfor %}
 {% endif %}
 {% if v['inmemory_data_flush_interval'] is defined and
-  v['inmemory_data_flush_interval'] != '' %}
+  v['inmemory_data_flush_interval'] not in ['', [], '[]', None] %}
 {{ ' --inmemoryDataFlushInterval=\'' + v['inmemory_data_flush_interval'] +
   '\'' -}}
 {% endif %}
-{%- include 'vm_intern_options.j2' -%}
-{% if v['log_new_series'] is defined and v['log_new_series'] in 'true' %}
+{%- include 'vm.d/intern_options.j2' -%}
+{% if v['log_new_series'] is defined and v['log_new_series'] == 'true' %}
 {{ ' --logNewSeries' -}}
 {% endif %}
-{% if v['logger'] is defined and v['logger'] != '' %}
+{% if v['logger'] is defined and v['logger'] not in ['', [], '[]', None] %}
 {% for vl in v['logger'] %}
-{%- include 'vm_logger_options.j2' -%}
+{%- include 'vm.d/logger_options.j2' -%}
 {% endfor %}
 {% endif %}
-{%- include 'vm_memory_options.j2' -%}
-{% if v['metrics'] is defined and v['metrics'] != '' %}
+{%- include 'vm.d/memory_options.j2' -%}
+{% if v['metrics'] is defined and v['metrics']
+  not in ['', [], '[]', None] %}
 {% for vm in v['metrics'] %}
-{%- include 'vm_metrics_options.j2' -%}
+{%- include 'vm.d/metrics_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['precision_bits'] is defined and v['precision_bits'] != '' %}
+{% if v['precision_bits'] is defined and v['precision_bits']
+  not in ['', [], '[]', None] %}
 {{ ' --precisionBits=\'' ~ v['precision_bits'] ~ '\'' -}}
 {% endif %}
-{%- include 'vm_pprof_options.j2' -%}
-{% if v['pushmetrics'] is defined and v['pushmetrics'] != '' %}
+{%- include 'vm.d/pprof_options.j2' -%}
+{% if v['pushmetrics'] is defined and v['pushmetrics']
+  not in ['', [], '[]', None] %}
 {% for vp in v['pushmetrics'] %}
-{%- include 'vm_pushmetrics_options.j2' -%}
+{%- include 'vm.d/pushmetrics_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['retention_period'] is defined and v['retention_period'] != '' %}
+{% if v['retention_period'] is defined and v['retention_period']
+  not in ['', [], '[]', None] %}
 {{ ' --retentionPeriod=\'' + v['retention_period'] + '\'' -}}
 {% endif %}
 {% if v['retention_timezone_offset'] is defined and
-  v['retention_timezone_offset'] != '' %}
+  v['retention_timezone_offset'] not in ['', [], '[]', None] %}
 {{ ' --retentionTimezoneOffset=\'' + v['retention_timezone_offset'] + '\'' -}}
 {% endif %}
-{%- include 'vm_rpc_options.j2' -%}
-{% if v['search'] is defined and v['search'] != '' %}
+{%- include 'vm.d/rpc_options.j2' -%}
+{% if v['search'] is defined and v['search'] not in ['', [], '[]', None] %}
 {% for vs in v['search'] %}
-{%- include 'vm_search_options.j2' -%}
+{%- include 'vm.d/search_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['snapshot_auth_key'] is defined and v['snapshot_auth_key'] != '' %}
+{% if v['snapshot_auth_key'] is defined and v['snapshot_auth_key']
+  not in ['', [], '[]', None] %}
 {{ ' --snapshotAuthKey=\'' + v['snapshot_auth_key'] + '\'' -}}
 {% endif %}
-{% if v['snapshots_max_age'] is defined and v['snapshots_max_age'] != '' %}
+{% if v['snapshots_max_age'] is defined and v['snapshots_max_age']
+  not in ['', [], '[]', None] %}
 {{ ' --snapshotsMaxAge=\'' + v['snapshots_max_age'] + '\'' -}}
 {% endif %}
-{% if v['storage'] is defined and v['storage'] != '' %}
+{% if v['storage'] is defined and v['storage'] not in ['', [], '[]', None] %}
 {% for vs in v['storage'] %}
-{%- include 'vm_vmstorage_options.j2' -%}
+{%- include 'vm.d/vmstorage_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['tls'] is defined and v['tls'] != '' %}
+{% if v['tls'] is defined and v['tls'] not in ['', [], '[]', None] %}
 {% for vt in v['tls'] %}
-{%- include 'vm_tls_options.j2' -%}
+{%- include 'vm.d/tls_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['vminsert_addr'] is defined and v['vminsert_addr'] != '' %}
+{% if v['vminsert_addr'] is defined and v['vminsert_addr']
+  not in ['', [], '[]', None] %}
 {{ ' --vminsertAddr=\'' + v['vminsert_addr'] + '\'' -}}
 {% endif %}
-{% if v['vmselect_addr'] is defined and v['vmselect_addr'] != '' %}
+{% if v['vmselect_addr'] is defined and v['vmselect_addr']
+  not in ['', [], '[]', None] %}
 {{ ' --vmselectAddr=\'' + v['vmselect_addr'] + '\'' -}}
 {% endif %}
 {% if loop['last'] %}

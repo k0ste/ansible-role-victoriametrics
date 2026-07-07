@@ -2,83 +2,91 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{% if vars['victoriametrics_service_settings_vmselect'] is defined and
-  vars['victoriametrics_service_settings_vmselect'] != '' %}
-{% for v in vars['victoriametrics_service_settings_vmselect'] %}
+{% if lookup('ansible.builtin.vars',
+  'victoriametrics_service_settings_vmselect', default='')
+  not in ['', [], '[]', None] %}
+{% for v in lookup('ansible.builtin.vars',
+  'victoriametrics_service_settings_vmselect') %}
 {% if loop['first'] %}
 {{ 'VMSELECT_ARGS=\"' -}}
 {% endif %}
-{%- include 'vm_cache_options.j2' -%}
-{% if v['cache_data_path'] is defined and v['cache_data_path'] != '' %}
+{%- include 'vm.d/cache_options.j2' -%}
+{% if v['cache_data_path'] is defined and v['cache_data_path']
+  not in ['', [], '[]', None] %}
 {{ ' --cacheDataPath=\'' + v['cache_data_path'] + '\'' -}}
 {% endif %}
-{% if v['cache_data_path'] is defined and v['cache_data_path'] != '' %}
+{% if v['cache_data_path'] is defined and v['cache_data_path']
+  not in ['', [], '[]', None] %}
 {{ ' --cacheDataPath=\'' + v['cache_data_path'] + '\'' -}}
 {% endif %}
-{% if v['cluster_native'] is defined and v['cluster_native'] != '' %}
+{% if v['cluster_native'] is defined and v['cluster_native']
+  not in ['', [], '[]', None] %}
 {% for vcn in v['cluster_native'] %}
-{%- include 'vm_cluster_native_options.j2' -%}
+{%- include 'vm.d/cluster_native_options.j2' -%}
 {% endfor %}
 {% endif %}
 {% if v['dedup_min_scrape_interval'] is defined and
-  v['dedup_min_scrape_interval'] != '' %}
+  v['dedup_min_scrape_interval'] not in ['', [], '[]', None] %}
 {{ ' --dedup.minScrapeInterval=\'' + v['dedup_min_scrape_interval'] + '\'' -}}
 {% endif %}
-{% if v['delete_auth_key'] is defined and v['delete_auth_key'] != '' %}
+{% if v['delete_auth_key'] is defined and v['delete_auth_key']
+  not in ['', [], '[]', None] %}
 {{ ' --deleteAuthKey=\'' + v['delete_auth_key'] + '\'' -}}
 {% endif %}
-{%- include 'vm_generic_options.j2' -%}
+{%- include 'vm.d/generic_options.j2' -%}
 {% if v['global_replication_factor'] is defined and
-  v['global_replication_factor'] != '' %}
+  v['global_replication_factor'] not in ['', [], '[]', None] %}
 {{ ' --globalReplicationFactor=\'' ~ v['global_replication_factor'] ~ '\'' -}}
 {% endif %}
-{% if v['graphite'] is defined and v['graphite'] != '' %}
+{% if v['graphite'] is defined and v['graphite'] not in ['', [], '[]', None] %}
 {% for vg in v['graphite'] %}
-{%- include 'vm_graphite_options.j2' -%}
+{%- include 'vm.d/graphite_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['http'] is defined and v['http'] != '' %}
+{% if v['http'] is defined and v['http'] not in ['', [], '[]', None] %}
 {% for vh in v['http'] %}
-{%- include 'vm_http_options.j2' -%}
+{%- include 'vm.d/http_options.j2' -%}
 {% endfor %}
 {% endif %}
-{%- include 'vm_intern_options.j2' -%}
-{% if v['logger'] is defined and v['logger'] != '' %}
+{%- include 'vm.d/intern_options.j2' -%}
+{% if v['logger'] is defined and v['logger'] not in ['', [], '[]', None] %}
 {% for vl in v['logger'] %}
-{%- include 'vm_logger_options.j2' -%}
+{%- include 'vm.d/logger_options.j2' -%}
 {% endfor %}
 {% endif %}
-{%- include 'vm_memory_options.j2' -%}
-{% if v['metrics'] is defined and v['metrics'] != '' %}
+{%- include 'vm.d/memory_options.j2' -%}
+{% if v['metrics'] is defined and v['metrics'] not in ['', [], '[]', None] %}
 {% for vm in v['metrics'] %}
-{%- include 'vm_metrics_options.j2' -%}
+{%- include 'vm.d/metrics_options.j2' -%}
 {% endfor %}
 {% endif %}
-{%- include 'vm_pprof_options.j2' -%}
-{% if v['replication_factor'] is defined and v['replication_factor'] != '' %}
+{%- include 'vm.d/pprof_options.j2' -%}
+{% if v['replication_factor'] is defined and v['replication_factor']
+  not in ['', [], '[]', None] %}
 {{ ' --replicationFactor=\'' ~ v['replication_factor'] ~ '\'' -}}
 {% endif %}
-{% if v['search'] is defined and v['search'] != '' %}
+{% if v['search'] is defined and v['search'] not in ['', [], '[]', None] %}
 {% for vs in v['search'] %}
-{%- include 'vm_search_options.j2' -%}
+{%- include 'vm.d/search_options.j2' -%}
 {% endfor %}
 {% endif %}
-{%- include 'vm_storage_options.j2' -%}
-{% if v['tls'] is defined and v['tls'] != '' %}
+{%- include 'vm.d/storage_options.j2' -%}
+{% if v['tls'] is defined and v['tls'] not in ['', [], '[]', None] %}
 {% for vt in v['tls'] %}
-{%- include 'vm_tls_options.j2' -%}
+{%- include 'vm.d/tls_options.j2' -%}
 {% endfor %}
 {% endif %}
-{% if v['vmalert_proxy_url'] is defined and v['vmalert_proxy_url'] != '' %}
+{% if v['vmalert_proxy_url'] is defined and v['vmalert_proxy_url']
+  not in ['', [], '[]', None] %}
 {{ ' --vmalert.proxyURL=\'' + v['vmalert_proxy_url'] + '\'' -}}
 {% endif %}
 {% if v['vmui_custom_dashboards_path'] is defined and
-  v['vmui_custom_dashboards_path'] != '' %}
+  v['vmui_custom_dashboards_path'] not in ['', [], '[]', None] %}
 {{ ' --vmui.customDashboardsPath=\'' + v['vmui_custom_dashboards_path'] +
   '\'' -}}
 {% endif %}
 {% if v['vmui_default_timezone'] is defined and
-  v['vmui_default_timezone'] != '' %}
+  v['vmui_default_timezone'] not in ['', [], '[]', None] %}
 {{ ' --vmui.defaultTimezone=\'' + v['vmui_default_timezone'] + '\'' -}}
 {% endif %}
 {% if loop['last'] %}

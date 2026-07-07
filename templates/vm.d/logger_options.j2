@@ -1,31 +1,34 @@
 {% if vl['disable_timestamps'] is defined and
-  vl['disable_timestamps'] in 'true' %}
+  vl['disable_timestamps'] == 'true' %}
 {{ ' --loggerDisableTimestamps' -}}
 {% endif %}
 {% if vl['errors_per_second_limit'] is defined and
-  vl['errors_per_second_limit'] != '' %}
+  vl['errors_per_second_limit'] not in ['', [], '[]', None] %}
 {{ ' --loggerErrorsPerSecondLimit=\'' ~ vl['errors_per_second_limit'] ~ '\'' -}}
 {% endif %}
 {% if vl['format'] is defined and vl['format'] in ['default', 'json'] %}
 {{ ' --loggerFormat=\'' + vl['format'] + '\'' -}}
 {% endif %}
-{% if vl['json_fields'] is defined and vl['json_fields'] != '' %}
+{% if vl['json_fields'] is defined and vl['json_fields']
+  not in ['', [], '[]', None] %}
 {{ ' --loggerJSONFields=\'' + vl['json_fields'] + '\'' -}}
 {% endif %}
 {% if vl['level'] is defined and vl['level'] in ['INFO', 'WARN', 'ERROR',
   'FATAL', 'PANIC'] %}
 {{ ' --loggerLevel=\'' + vl['level'] + '\'' -}}
 {% endif %}
-{% if vl['max_arg_len'] is defined and vl['max_arg_len'] != '' %}
+{% if vl['max_arg_len'] is defined and vl['max_arg_len']
+  not in ['', [], '[]', None] %}
 {{ ' --loggerMaxArgLen=\'' ~ vl['max_arg_len'] + '\'' -}}
 {% endif %}
 {% if vl['output'] is defined and vl['output'] in ['stderr', 'stdout'] %}
 {{ ' --loggerOutput=\'' + vl['output'] + '\'' -}}
 {% endif %}
-{% if vl['timezone'] is defined and vl['timezone'] != '' %}
+{% if vl['timezone'] is defined and vl['timezone']
+  not in ['', [], '[]', None] %}
 {{ ' --loggerTimezone=\'' + vl['timezone'] + '\'' -}}
 {% endif %}
 {% if vl['warns_per_second_limit'] is defined and
-  vl['warns_per_second_limit'] != '' %}
+  vl['warns_per_second_limit'] not in ['', [], '[]', None] %}
 {{ ' --loggerWarnsPerSecondLimit=\'' ~ vl['warns_per_second_limit'] ~ '\'' -}}
 {% endif %}

@@ -7,7 +7,7 @@ galaxy_info:
   description: "Deploy VictoriaMetrics - scalable monitoring solution"
   company: "YASB"
   license: "GPL"
-  min_ansible_version: "3.0.0"
+  min_ansible_version: "9.0.0"
   platforms:
     - name: "EL"
       versions:

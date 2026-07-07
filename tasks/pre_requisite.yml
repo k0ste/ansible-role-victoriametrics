@@ -1,70 +1,89 @@
 ---
+- name: "victoriametrics | Assert that ansible facts gathered successfully"
+  ansible.builtin.assert:
+    that:
+      - "hostvars[inventory_hostname]['ansible_facts']['service_mgr'] is
+        defined"
+    fail_msg: "'ansible_facts' not found. Please enable facts gathering"
+    quiet: "true"
 - name: "victoriametrics | Assert that system manager is systemd"
   ansible.builtin.assert:
     that:
-      - "hostvars[inventory_hostname]['ansible_service_mgr'] == 'systemd'"
+      - "hostvars[inventory_hostname]['ansible_facts']['service_mgr'] ==
+        'systemd'"
     fail_msg: "System manager is not systemd"
     quiet: "true"
 - name: "victoriametrics | Add the OS specific variables"
   ansible.builtin.include_vars:
-    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+    file: "{{ hostvars[inventory_hostname]['ansible_facts']['os_family'] +
+      '.yml' }}"
 - name: "victoriametrics | Set facts about victoriametrics role"
   ansible.builtin.set_fact:
-    victoriametrics_package_state: "{{ victoriametrics |
+    victoriametrics_package_state:
+      "{{ lookup('ansible.builtin.vars', 'victoriametrics') |
       community.general.json_query('[].package_state | [0]') }}"
-    victoriametrics_service_settings_vminsert: "{{ victoriametrics |
+    victoriametrics_service_settings_vminsert:
+      "{{ lookup('ansible.builtin.vars', 'victoriametrics') |
       community.general.json_query('[].settings[].vminsert[]') }}"
-    victoriametrics_service_settings_vmstorage: "{{ victoriametrics |
+    victoriametrics_service_settings_vmstorage:
+      "{{ lookup('ansible.builtin.vars', 'victoriametrics') |
       community.general.json_query('[].settings[].vmstorage[]') }}"
-    victoriametrics_service_settings_vmselect: "{{ victoriametrics |
+    victoriametrics_service_settings_vmselect:
+      "{{ lookup('ansible.builtin.vars', 'victoriametrics') |
       community.general.json_query('[].settings[].vmselect[]') }}"
-    victoriametrics_service_settings_vmauth: "{{ victoriametrics |
+    victoriametrics_service_settings_vmauth: "{{ lookup('ansible.builtin.vars',
+      'victoriametrics') |
       community.general.json_query('[].settings[].vmauth[]') }}"
-    victoriametrics_vmauth_instance_settings: "{{ victoriametrics |
+    victoriametrics_vmauth_instance_settings: "{{ lookup('ansible.builtin.vars',
+      'victoriametrics') |
       community.general.json_query('[].settings[].vmauth[].config[] | [0]') }}"
-- name: "victoriametrics | Assert that package state in valid value"
+  when:
+    - "lookup('ansible.builtin.vars', 'victoriametrics', default='')
+      not in ['', [], '[]', None]"
+- name: "victoriametrics | Assert that victoriametrics package state in valid
+    value"
   ansible.builtin.assert:
     that:
-      - "vars['victoriametrics_package_state'] in ['present', 'latest']"
-    fail_msg: "'package_state' must be in 'present' or 'latest'"
+      - "lookup('ansible.builtin.vars', 'victoriametrics_package_state') in
+        ['present', 'latest']"
+    fail_msg: "{{ 'package_state must be in `present` or `latest`,
+      current is: ' + lookup('ansible.builtin.vars',
+      'victoriametrics_package_state') }}"
     quiet: "true"
   when:
-    - "vars['victoriametrics_package_state'] is defined"
-    - "vars['victoriametrics_package_state'] != []"
-    - "vars['victoriametrics_package_state'] != ''"
-    - "vars['victoriametrics_package_state'] != None"
+    - "lookup('ansible.builtin.vars', 'victoriametrics_package_state',
+      default='') not in ['', [], '[]', None, 'present', 'latest']"
 - name: "victoriametrics | Set package state to 'present' cause value is not
     defined"
   ansible.builtin.set_fact:
     victoriametrics_package_state: "present"
   when:
-    - "vars['victoriametrics_package_state'] is defined"
-    - "(vars['victoriametrics_package_state'] == '' or
-      vars['victoriametrics_package_state'] == None)"
+    - "lookup('ansible.builtin.vars', 'victoriametrics_package_state',
+      default='') in ['', [], '[]', None]"
 - name: "victoriametrics | Create /etc/conf.d directory"
   ansible.builtin.file:
-    path: "{{ hostvars[inventory_hostname]['victoriametrics_options_dest'] }}"
+    path: "{{ lookup('ansible.builtin.vars', 'victoriametrics_options_dest') }}"
     state: "directory"
     owner: "root"
     group: "root"
     mode: "0755"
   when:
-    - "(vars['victoriametrics_service_settings_vminsert'] is defined and
-      vars['victoriametrics_service_settings_vminsert'] not in
-      ['', [], None]) or
-      (vars['victoriametrics_service_settings_vmstorage'] is defined and
-      vars['victoriametrics_service_settings_vmstorage'] not in
-      ['', [], None]) or
-      (vars['victoriametrics_service_settings_vmselect'] is defined and
-      vars['victoriametrics_service_settings_vmselect'] not in
-      ['', [], None])"
+    - "(lookup('ansible.builtin.vars',
+      'victoriametrics_service_settings_vminsert', default='')
+      not in ['', [], '[]', None]) or
+      (lookup('ansible.builtin.vars',
+      'victoriametrics_service_settings_vmstorage', default='')
+      not in ['', [], '[]', None]) or
+      (lookup('ansible.builtin.vars',
+      'victoriametrics_service_settings_vmselect', default='')
+      not in ['', [], '[]', None])"
 - name: "victoriametrics | Create VictoriaMetrics config directory [vmauth]"
   ansible.builtin.file:
-    path: "{{ hostvars[inventory_hostname]['victoriametrics_conf_dest'] }}"
+    path: "{{ lookup('ansible.builtin.vars', 'victoriametrics_conf_dest') }}"
     state: "directory"
     owner: "root"
     group: "root"
     mode: "0755"
   when:
-    - "vars['victoriametrics_service_settings_vmauth'] is defined"
-    - "vars['victoriametrics_service_settings_vmauth'] not in ['', [], None]"
+    - "lookup('ansible.builtin.vars', 'victoriametrics_service_settings_vmauth',
+      default='') not in ['', [], '[]', None]"

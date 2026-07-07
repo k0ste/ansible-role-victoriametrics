@@ -1,8 +1,8 @@
 {% if v['vmstorage_dial_timeout'] is defined and
-  v['vmstorage_dial_timeout'] != '' %}
+  v['vmstorage_dial_timeout'] not in ['', [], '[]', None] %}
 {{ ' --vmstorageDialTimeout=\'' + v['vmstorage_dial_timeout'] + '\'' -}}
 {% endif %}
 {% if v['vmstorage_user_timeout'] is defined and
-  v['vmstorage_user_timeout'] != '' %}
+  v['vmstorage_user_timeout'] not in ['', [], '[]', None] %}
 {{ ' --vmstorageUserTimeout=\'' + v['vmstorage_user_timeout'] + '\'' -}}
 {% endif %}

@@ -1,21 +1,23 @@
 {% if v['deny_query_tracing'] is defined and
-  v['deny_query_tracing'] in 'true' %}
+  v['deny_query_tracing'] == 'true' %}
 {{ ' --denyQueryTracing' -}}
 {% endif %}
-{% if v['enable_tcp6'] is defined and v['enable_tcp6'] in 'true' %}
+{% if v['enable_tcp6'] is defined and v['enable_tcp6'] == 'true' %}
 {{ ' --enableTCP6' -}}
 {% endif %}
 {% if v['filestream_disable_fadvise'] is defined and
-  v['filestream_disable_fadvise'] in 'true' %}
+  v['filestream_disable_fadvise'] == 'true' %}
 {{ ' --filestream.disableFadvise' -}}
 {% endif %}
-{% if v['flags_auth_key'] is defined and v['flags_auth_key'] != '' %}
+{% if v['flags_auth_key'] is defined and v['flags_auth_key']
+  not in ['', [], '[]', None] %}
 {{ ' --flagsAuthKey=\'' + v['flags_auth_key'] + '\'' -}}
 {% endif %}
-{% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] in 'true' %}
+{% if v['fs_disable_mmap'] is defined and v['fs_disable_mmap'] == 'true' %}
 {{ ' --fs.disableMmap' -}}
 {% endif %}
-{% if v['select_node'] is defined and v['select_node'] != '' %}
+{% if v['select_node'] is defined and v['select_node']
+  not in ['', [], '[]', None] %}
 {% if v['select_node'] is string %}
 {{ ' --selectNode=\'' + v['select_node'] + '\'' -}}
 {% elif v['select_node'] is sequence %}
@@ -24,7 +26,8 @@
 {% endfor %}
 {% endif %}
 {% endif %}
-{% if v['storage_node'] is defined and v['storage_node'] != '' %}
+{% if v['storage_node'] is defined and v['storage_node']
+  not in ['', [], '[]', None] %}
 {% if v['storage_node'] is string %}
 {{ ' --storageNode=\'' + v['storage_node'] + '\'' -}}
 {% elif v['storage_node'] is sequence %}

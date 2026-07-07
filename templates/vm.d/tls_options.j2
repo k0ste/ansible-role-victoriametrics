@@ -1,9 +1,11 @@
-{% if (vt['cert_file'] is defined and vt['cert_file'] != '') and
-  (vt['key_file'] is defined and vt['key_file'] != '') %}
+{% if (vt['cert_file'] is defined and vt['cert_file']
+  not in ['', [], '[]', None]) and (vt['key_file'] is defined and vt['key_file']
+  not in ['', [], '[]', None]) %}
 {{ ' --tls' -}}
 {{ ' --tlsCertFile=\'' + vt['cert_file'] + '\'' -}}
 {{ ' --tlsKeyFile=\'' + vt['key_file'] + '\'' -}}
-{% if vt['cipher_suites'] is defined and vt['cipher_suites'] != '' %}
+{% if vt['cipher_suites'] is defined and vt['cipher_suites']
+  not in ['', [], '[]', None] %}
 {% if vt['cipher_suites'] is string %}
 {{ ' --tlsCipherSuites=\'' + vt['cipher_suites'] + '\'' -}}
 {% elif vt['cipher_suites'] is sequence %}

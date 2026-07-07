@@ -1,0 +1,7 @@
+{% if vm['expose_metadata'] is defined and vm['expose_metadata'] == 'true' %}
+{{ ' --metrics.exposeMetadata' -}}
+{% endif %}
+{% if vm['auth_key'] is defined and vm['auth_key']
+  not in ['', [], '[]', None] %}
+{{ ' --metricsAuthKey=\'' + vm['auth_key'] + '\'' -}}
+{% endif %}

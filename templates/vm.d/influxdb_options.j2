@@ -1,4 +1,5 @@
-{% if vi['database_names'] is defined and vi['database_names'] != '' %}
+{% if vi['database_names'] is defined and vi['database_names']
+  not in ['', [], '[]', None] %}
 {% if vi['database_names'] is string %}
 {{ ' --influx.databaseNames=\'' + vi['database_names'] + '\'' -}}
 {% elif vi['database_names'] is sequence %}
@@ -7,34 +8,39 @@
 {% endfor %}
 {% endif %}
 {% endif %}
-{% if vi['max_line_size'] is defined and vi['max_line_size'] != '' %}
+{% if vi['max_line_size'] is defined and vi['max_line_size']
+  not in ['', [], '[]', None] %}
 {{ ' --influx.maxLineSize=\'' + vi['max_line_size'] + '\'' -}}
 {% endif %}
-{% if vi['max_request_size'] is defined and vi['max_request_size'] != '' %}
+{% if vi['max_request_size'] is defined and vi['max_request_size']
+  not in ['', [], '[]', None] %}
 {{ ' --influx.maxRequestSize=\'' + vi['max_request_size'] + '\'' -}}
 {% endif %}
-{% if vi['db_label'] is defined and vi['db_label'] != '' %}
+{% if vi['db_label'] is defined and vi['db_label']
+  not in ['', [], '[]', None] %}
 {{ ' --influxDBLabel=\'' + vi['db_label'] + '\'' -}}
 {% endif %}
-{% if vi['listen_addr'] is defined and vi['listen_addr'] != '' %}
+{% if vi['listen_addr'] is defined and vi['listen_addr']
+  not in ['', [], '[]', None] %}
 {{ ' --influxListenAddr=\'' + vi['listen_addr'] + '\'' -}}
 {% endif %}
 {% if vi['listen_addr_use_proxy_protocol'] is defined and
-  vi['listen_addr_use_proxy_protocol'] in 'true' %}
+  vi['listen_addr_use_proxy_protocol'] == 'true' %}
 {{ ' --influxListenAddr.useProxyProtocol' -}}
 {% endif %}
 {% if vi['measurement_field_separator'] is defined and
-  vi['measurement_field_separator'] != '' %}
+  vi['measurement_field_separator'] not in ['', [], '[]', None] %}
 {{ ' --influxMeasurementFieldSeparator=\'' +
   vi['measurement_field_separator'] + '\'' -}}
 {% endif %}
-{% if vi['skip_measurement'] is defined and vi['skip_measurement'] in 'true' %}
+{% if vi['skip_measurement'] is defined and vi['skip_measurement'] == 'true' %}
 {{ ' --influxSkipMeasurement' -}}
 {% endif %}
 {% if vi['skip_single_field'] is defined and
-  vi['skip_single_field'] in 'true' %}
+  vi['skip_single_field'] == 'true' %}
 {{ ' --influxSkipSingleField' -}}
 {% endif %}
-{% if vi['trim_timestamp'] is defined and vi['trim_timestamp'] != '' %}
+{% if vi['trim_timestamp'] is defined and vi['trim_timestamp']
+  not in ['', [], '[]', None] %}
 {{ ' --influxTrimTimestamp=\'' + vi['trim_timestamp'] + '\'' -}}
 {% endif %}

@@ -2,4 +2,5 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{{ victoriametrics_vmauth_instance_settings | ansible.builtin.to_nice_yaml() }}
+{{ lookup('ansible.builtin.vars', 'victoriametrics_vmauth_instance_settings') |
+  ansible.builtin.to_nice_yaml() }}

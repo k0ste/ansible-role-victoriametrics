@@ -1,14 +1,16 @@
 {% if vg['sanitize_metric_name'] is defined and
-  vg['sanitize_metric_name'] in 'true' %}
+  vg['sanitize_metric_name'] == 'true' %}
 {{ ' --graphite.sanitizeMetricName' -}}
 {% endif %}
-{% if vg['listen_addr'] is defined and vg['listen_addr'] != '' %}
+{% if vg['listen_addr'] is defined and vg['listen_addr']
+  not in ['', [], '[]', None] %}
 {{ ' --graphiteListenAddr=\'' + vg['listen_addr'] + '\'' -}}
 {% endif %}
 {% if vg['listen_addr_use_proxy_protocol'] is defined and
-  vg['listen_addr_use_proxy_protocol'] in 'true' %}
+  vg['listen_addr_use_proxy_protocol'] == 'true' %}
 {{ ' --graphiteListenAddr.useProxyProtocol' -}}
 {% endif %}
-{% if vg['trim_timestamp'] is defined and vg['trim_timestamp'] != '' %}
+{% if vg['trim_timestamp'] is defined and vg['trim_timestamp']
+  not in ['', [], '[]', None] %}
 {{ ' --graphiteTrimTimestamp=\'' + vg['trim_timestamp'] + '\'' -}}
 {% endif %}
